@@ -1,26 +1,317 @@
-@import "tailwindcss";
+/* File: app/globals.css - Refined with Quiet Luxury Palette */
+/* Import editorial fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;1,300&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* QUIET LUXURY PALETTE - Primary */
+    --roasted-cashew: 145, 133, 116;  /* #918574 - Main neutral */
+    --frozen-dew: 224, 217, 201;      /* #e0d9c9 - Light neutral */
+    --dark-night: 71, 70, 68;         /* #474644 - Dark accent */
+    --temple-grey: 186, 177, 174;     /* #bab1ae - Mid grey */
+    --snowfall: 237, 228, 221;        /* #ede4dd - Lightest */
+    
+    /* EARTHY PALETTE - Secondary accents */
+    --earthy-sage: 159, 152, 138;     /* #9f958a - Muted green-grey */
+    --earthy-blush: 224, 217, 211;    /* #e0d9d3 - Soft warm */
+    --earthy-taupe: 145, 133, 116;    /* #918574 - Warm brown */
+    --earthy-umber: 82, 70, 57;       /* #524639 - Deep brown */
+    --earthy-night: 23, 22, 20;       /* #171614 - Almost black */
+    
+    /* Subtle Accent - Muted Coral */
+    --accent: 255, 107, 107;           /* Coral - used sparingly */
+    --accent-muted: 218, 143, 143;    /* Muted coral for subtle use */
+    
+    /* Dynamic theme variables for light mode */
+    --bg-primary: 237, 228, 221;      /* snowfall */
+    --bg-secondary: 224, 217, 201;    /* frozen-dew */
+    --bg-tertiary: 224, 217, 211;     /* earthy-blush */
+    --text-primary: 71, 70, 68;       /* dark-night */
+    --text-secondary: 82, 70, 57;     /* earthy-umber */
+    --text-tertiary: 145, 133, 116;   /* roasted-cashew */
+    --border: 186, 177, 174;          /* temple-grey */
+    --card-bg: 255, 255, 255;         /* pure white */
+    
+    /* Original stone palette for compatibility */
+    --stone-50: 253, 252, 251;
+    --stone-100: 250, 248, 246;
+    --stone-200: 245, 241, 237;
+    --stone-300: 232, 226, 219;
+    --stone-400: 212, 203, 192;
+    --stone-500: 184, 171, 155;
+    --stone-600: 154, 141, 125;
+    --stone-700: 125, 114, 101;
+    --stone-800: 102, 92, 81;
+    --stone-900: 74, 67, 59;
+    --stone-950: 28, 25, 23;
+  }
+
+  /* Dark mode with earthy tones */
+  .dark {
+    --bg-primary: 23, 22, 20;         /* earthy-night */
+    --bg-secondary: 71, 70, 68;       /* dark-night */
+    --bg-tertiary: 82, 70, 57;        /* earthy-umber */
+    --text-primary: 237, 228, 221;    /* snowfall */
+    --text-secondary: 224, 217, 201;  /* frozen-dew */
+    --text-tertiary: 186, 177, 174;   /* temple-grey */
+    --border: 82, 70, 57;             /* earthy-umber */
+    --card-bg: 71, 70, 68;            /* dark-night */
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    background-color: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    outline: 2px solid rgb(var(--accent-muted));
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Luxury color classes */
+  .bg-cashew { background-color: rgb(var(--roasted-cashew)); }
+  .bg-frozen { background-color: rgb(var(--frozen-dew)); }
+  .bg-night { background-color: rgb(var(--dark-night)); }
+  .bg-temple { background-color: rgb(var(--temple-grey)); }
+  .bg-snow { background-color: rgb(var(--snowfall)); }
+  
+  .text-cashew { color: rgb(var(--roasted-cashew)); }
+  .text-frozen { color: rgb(var(--frozen-dew)); }
+  .text-night { color: rgb(var(--dark-night)); }
+  .text-temple { color: rgb(var(--temple-grey)); }
+  .text-snow { color: rgb(var(--snowfall)); }
+  
+  /* Dynamic theme classes */
+  .bg-primary { background-color: rgb(var(--bg-primary)); }
+  .bg-secondary { background-color: rgb(var(--bg-secondary)); }
+  .bg-tertiary { background-color: rgb(var(--bg-tertiary)); }
+  .text-primary { color: rgb(var(--text-primary)); }
+  .text-secondary { color: rgb(var(--text-secondary)); }
+  .text-tertiary { color: rgb(var(--text-tertiary)); }
+  .border-primary { border-color: rgb(var(--border)); }
+  .bg-card { background-color: rgb(var(--card-bg)); }
+
+  /* Refined gradients */
+  .gradient-luxury {
+    background: linear-gradient(135deg, 
+      rgb(var(--snowfall)) 0%, 
+      rgb(var(--frozen-dew)) 50%, 
+      rgb(var(--temple-grey)) 100%);
+  }
+  
+  .gradient-subtle {
+    background: linear-gradient(180deg,
+      rgba(var(--frozen-dew), 0.5) 0%,
+      transparent 100%);
+  }
+
+  /* Stone colors for backward compatibility */
+  .bg-stone-50 { background-color: rgb(var(--stone-50)); }
+  .bg-stone-100 { background-color: rgb(var(--stone-100)); }
+  .bg-stone-200 { background-color: rgb(var(--stone-200)); }
+  .bg-stone-300 { background-color: rgb(var(--stone-300)); }
+  .bg-stone-400 { background-color: rgb(var(--stone-400)); }
+  .bg-stone-500 { background-color: rgb(var(--stone-500)); }
+  .bg-stone-600 { background-color: rgb(var(--stone-600)); }
+  .bg-stone-700 { background-color: rgb(var(--stone-700)); }
+  .bg-stone-800 { background-color: rgb(var(--stone-800)); }
+  .bg-stone-900 { background-color: rgb(var(--stone-900)); }
+  .bg-stone-950 { background-color: rgb(var(--stone-950)); }
+  
+  /* Map stone colors to luxury palette in light mode */
+  .bg-stone-50 { background-color: rgb(var(--snowfall)); }
+  .bg-stone-100 { background-color: rgb(var(--frozen-dew)); }
+  .bg-stone-200 { background-color: rgb(var(--temple-grey)); }
+  
+  /* Dark mode adjustments */
+  .dark .bg-stone-50 { background-color: rgb(var(--dark-night)); }
+  .dark .bg-stone-100 { background-color: rgb(var(--earthy-umber)); }
+  .dark .bg-stone-200 { background-color: rgb(var(--earthy-sage)); }
+  
+  /* Text colors with luxury mapping */
+  .text-stone-50 { color: rgb(var(--snowfall)); }
+  .text-stone-100 { color: rgb(var(--frozen-dew)); }
+  .text-stone-200 { color: rgb(var(--temple-grey)); }
+  .text-stone-300 { color: rgb(var(--temple-grey)); }
+  .text-stone-400 { color: rgb(var(--roasted-cashew)); }
+  .text-stone-500 { color: rgb(var(--roasted-cashew)); }
+  .text-stone-600 { color: rgb(var(--earthy-taupe)); }
+  .text-stone-700 { color: rgb(var(--earthy-umber)); }
+  .text-stone-800 { color: rgb(var(--earthy-umber)); }
+  .text-stone-900 { color: rgb(var(--dark-night)); }
+  .text-stone-950 { color: rgb(var(--earthy-night)); }
+  
+  /* Dark mode text adjustments */
+  .dark .text-stone-900 { color: rgb(var(--snowfall)); }
+  .dark .text-stone-800 { color: rgb(var(--frozen-dew)); }
+  .dark .text-stone-700 { color: rgb(var(--temple-grey)); }
+  .dark .text-stone-600 { color: rgb(var(--temple-grey)); }
+  .dark .text-stone-500 { color: rgb(var(--roasted-cashew)); }
+  
+  /* Border colors with luxury palette */
+  .border-stone-50 { border-color: rgb(var(--snowfall)); }
+  .border-stone-100 { border-color: rgb(var(--frozen-dew)); }
+  .border-stone-200 { border-color: rgb(var(--temple-grey)); }
+  .border-stone-300 { border-color: rgb(var(--temple-grey)); }
+  
+  /* Dark mode border adjustments */
+  .dark .border-stone-200 { border-color: rgb(var(--earthy-umber)); }
+  .dark .border-stone-100 { border-color: rgb(var(--earthy-sage)); }
+
+  /* Accent colors */
+  .bg-accent { background-color: rgb(var(--accent)); }
+  .bg-accent-muted { background-color: rgb(var(--accent-muted)); }
+  .text-accent { color: rgb(var(--accent)); }
+  .text-accent-muted { color: rgb(var(--accent-muted)); }
+  .border-accent { border-color: rgb(var(--accent)); }
+
+  /* Refined buttons */
+  .btn-primary {
+    padding: 1rem 2rem;
+    background-color: rgb(var(--dark-night));
+    color: rgb(var(--snowfall));
+    border-radius: 9999px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    transition: all 0.3s;
+  }
+  
+  .btn-primary:hover {
+    transform: scale(1.02);
+    background-color: rgb(var(--earthy-umber));
+  }
+
+  .btn-secondary {
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border: 1px solid rgb(var(--temple-grey));
+    color: rgb(var(--roasted-cashew));
+    border-radius: 9999px;
+    font-weight: 300;
+    transition: all 0.3s;
+  }
+  
+  .btn-secondary:hover {
+    background-color: rgba(var(--frozen-dew), 0.5);
+    transform: scale(1.02);
+  }
+
+  /* Refined cards */
+  .card-elegant {
+    background-color: rgb(var(--card-bg));
+    border: 1px solid rgba(var(--temple-grey), 0.3);
+    border-radius: 1.5rem;
+    transition: all 0.3s;
+  }
+
+  .card-elegant:hover {
+    box-shadow: 
+      0 10px 40px rgba(var(--dark-night), 0.08),
+      0 2px 8px rgba(var(--dark-night), 0.04);
+    transform: translateY(-2px);
+  }
+  
+  /* Dark mode card shadow */
+  .dark .card-elegant:hover {
+    box-shadow: 
+      0 10px 40px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Glass effect with luxury tones */
+  .glass {
+    background: rgba(var(--card-bg), 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  /* Dark mode glass */
+  .dark .glass {
+    background: rgba(var(--dark-night), 0.7);
+  }
+}
+
+@layer utilities {
+  /* Refined shadows */
+  .shadow-luxury {
+    box-shadow: 
+      0 4px 20px rgba(var(--dark-night), 0.06),
+      0 1px 3px rgba(var(--dark-night), 0.04);
+  }
+  
+  .shadow-luxury-lg {
+    box-shadow: 
+      0 10px 40px rgba(var(--dark-night), 0.08),
+      0 2px 8px rgba(var(--dark-night), 0.04);
+  }
+  
+  /* Dark mode shadow adjustments */
+  .dark .shadow-luxury {
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.2),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  
+  .dark .shadow-luxury-lg {
+    box-shadow: 
+      0 10px 40px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 3s ease-in-out infinite;
+  }
 }

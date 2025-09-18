@@ -1,103 +1,142 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, TrendingUp } from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Track mouse for subtle parallax effects
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return (
+    <main className="w-screen h-screen overflow-hidden" style={{ background: '#fdfcfb' }}>
+      {/* Clean background - no extra elements */}
+      <div className="fixed inset-0">
+        {/* Simple base gradient */}
+        <div className="absolute inset-0" 
+             style={{ 
+               background: 'radial-gradient(ellipse at center, #faf8f6 0%, #f5f1ed 25%, #e8e2db 50%, #fdfcfb 100%)'
+             }} />
+      </div>
+
+      {/* Main content - centered */}
+      <div className="relative w-screen h-screen flex items-center justify-center">
+        <div className="text-center">
+          {/* Small logo above */}
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-12"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center"
+                 style={{ 
+                   background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                   boxShadow: '0 20px 40px rgba(99, 102, 241, 0.2)'
+                 }}>
+              <TrendingUp className="w-8 h-8" style={{ color: '#fdfcfb' }} />
+            </div>
+          </motion.div>
+
+          {/* Main Seer title */}
+          <motion.h1 
+            className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-light mb-8 leading-none"
+            style={{ 
+              fontFamily: 'Playfair Display, serif',
+              color: '#1c1917',
+              letterSpacing: '-0.02em'
+            }}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
           >
-            Read our docs
-          </a>
+            Seer
+          </motion.h1>
+          
+          {/* Subtitle line */}
+          <motion.div 
+            className="flex items-center justify-center gap-8 mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <div className="h-[1px] w-32" style={{ background: 'linear-gradient(90deg, transparent, #d4cbc0)' }} />
+            <span className="text-xl tracking-[0.5em] uppercase font-light" style={{ color: '#9a8d7d' }}>
+              Intelligence Awaits
+            </span>
+            <div className="h-[1px] w-32" style={{ background: 'linear-gradient(90deg, #d4cbc0, transparent)' }} />
+          </motion.div>
+
+          {/* Description */}
+          <motion.p 
+            className="text-2xl md:text-3xl font-light leading-relaxed max-w-4xl mx-auto mb-16"
+            style={{ color: '#7d7265' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            Transform your creative vision with predictive trend intelligence. 
+            Let's craft your personalized experience.
+          </motion.p>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}
+          >
+            <Link href="/onboarding">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative"
+              >
+                <div className="relative px-16 py-6 rounded-full overflow-hidden"
+                     style={{ 
+                       background: 'linear-gradient(135deg, #1c1917, #4a433b)',
+                       boxShadow: '0 30px 60px rgba(28, 25, 23, 0.3)'
+                     }}>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                       style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)' }} />
+                  <span className="relative flex items-center gap-4 text-xl font-light" style={{ color: '#fdfcfb' }}>
+                    Begin Your Journey
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
+                  </span>
+                </div>
+              </motion.button>
+            </Link>
+          </motion.div>
+
+          {/* Bottom accent */}
+          <motion.div
+            className="flex items-center justify-center gap-16 mt-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+          >
+            {['Personalized', 'Predictive', 'Powerful'].map((text, i) => (
+              <div key={text} className="flex items-center gap-3">
+                <motion.div 
+                  className="w-2 h-2 rounded-full"
+                  style={{ background: '#6366f1' }}
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+                />
+                <span className="text-base" style={{ color: '#b8ab9b' }}>{text}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </main>
   );
 }
