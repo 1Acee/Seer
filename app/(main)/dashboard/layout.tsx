@@ -3,6 +3,7 @@
 
 import { ReactNode } from "react";
 import dynamic from "next/dynamic";
+import { WatchlistProvider } from "@/contexts/WatchlistContext";
 
 const Sidebar = dynamic(() => import("@/components/dashboard/Sidebar"), { 
   ssr: false 
@@ -17,12 +18,14 @@ export default function DashboardLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="min-h-screen" style={{ background: 'rgb(237, 228, 221)' }}>
-      <Sidebar />
-      <TopNav />
-      <main className="ml-72 pt-20">
-        {children}
-      </main>
-    </div>
+    <WatchlistProvider>
+      <div className="min-h-screen" style={{ background: 'rgb(237, 228, 221)' }}>
+        <Sidebar />
+        <TopNav />
+        <main className="ml-72 pt-20">
+          {children}
+        </main>
+      </div>
+    </WatchlistProvider>
   );
 }

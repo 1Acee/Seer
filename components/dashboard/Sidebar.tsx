@@ -8,10 +8,11 @@ import { motion } from "framer-motion";
 
 const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", symbol: "◈", href: "/dashboard" },
-  { id: "trends", label: "All Trends", symbol: "◊", href: "/trends" },
-  { id: "watchlist", label: "Watchlist", symbol: "◉", href: "/watchlist" },
-  { id: "optimizer", label: "Optimizer", symbol: "◢", href: "/optimizer" },
-  { id: "settings", label: "Settings", symbol: "◐", href: "/settings" }
+  { id: "trends", label: "All Trends", symbol: "◊", href: "/dashboard/trends" },
+  { id: "watchlist", label: "Watchlist", symbol: "◉", href: "/dashboard/watchlist" },
+  { id: "calendar", label: "Calendar", symbol: "◐", href: "/dashboard/calendar" },    
+  { id: "optimizer", label: "Optimizer", symbol: "◢", href: "/dashboard/optimizer" },
+  { id: "settings", label: "Settings", symbol: "◐", href: "/dashboard/settings" }
 ];
 
 export default function Sidebar() {

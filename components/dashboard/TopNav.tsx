@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
+import Link from "next/link";
 
 export default function TopNav() {
   const { theme, toggleTheme } = useTheme();
@@ -150,6 +151,24 @@ export default function TopNav() {
               )}
             </AnimatePresence>
           </div>
+
+          {/* Settings Cog - NEW ADDITION */}
+          <Link href="/dashboard/settings">
+            <motion.button
+              whileHover={{ scale: 1.05, rotate: 15 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-3 rounded-full transition-all"
+              style={{ 
+                background: theme === 'dark' ? 'rgba(82, 70, 57, 0.3)' : 'rgba(224, 217, 201, 0.2)'
+              }}
+              title="Settings"
+            >
+              <span className="text-xl" 
+                    style={{ color: theme === 'dark' ? 'rgb(224, 217, 201)' : 'rgb(145, 133, 116)' }}>
+                ⚙
+              </span>
+            </motion.button>
+          </Link>
 
           {/* Theme Toggle */}
           <motion.button
