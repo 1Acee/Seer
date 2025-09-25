@@ -146,11 +146,17 @@ export default function OptimizerPage() {
                       <button
                         key={platform.id}
                         onClick={() => setSelectedPlatform(platform.id)}
-                        className={`p-4 rounded-2xl border-2 transition-all ${
-                          selectedPlatform === platform.id
-                            ? 'border-[#FF6B6B] bg-[#FF6B6B]/5'
-                            : 'border-border hover:border-muted-foreground'
-                        } ${platform.color}`}
+                        className={`p-4 rounded-2xl transition-all ${platform.color}`}
+                        style={{
+                          borderWidth: '2px',
+                          borderStyle: 'solid',
+                          borderColor: selectedPlatform === platform.id 
+                            ? 'var(--accent-color)' 
+                            : 'var(--border)',
+                          backgroundColor: selectedPlatform === platform.id 
+                            ? 'rgba(var(--accent-rgb), 0.05)' 
+                            : 'transparent'
+                        }}
                       >
                         <div className="text-2xl mb-2">{platform.icon}</div>
                         <div className="text-sm font-light text-secondary-foreground">
@@ -242,7 +248,10 @@ export default function OptimizerPage() {
                       value={scriptText}
                       onChange={(e) => setScriptText(e.target.value)}
                       placeholder="Paste your script, caption, or content description here..."
-                      className="w-full h-64 p-6 bg-card border border-border rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6B6B]/20"
+                      className="w-full h-64 p-6 bg-card border border-border rounded-2xl resize-none focus:outline-none focus:ring-2"
+                      style={{
+                        '--tw-ring-color': 'rgba(var(--accent-rgb), 0.2)'
+                      } as React.CSSProperties}
                       disabled={!canUpload}
                     />
                     <div className="flex items-center justify-between">
@@ -268,9 +277,17 @@ export default function OptimizerPage() {
                     disabled={!canUpload || isAnalyzing || (!uploadedFile && uploadType === 'video') || (!scriptText && uploadType === 'script')}
                     className={`px-8 py-3 rounded-full font-light transition-all ${
                       canUpload && ((uploadedFile && uploadType === 'video') || (scriptText && uploadType === 'script'))
-                        ? 'bg-foreground text-background hover:scale-105'
-                        : 'bg-muted text-muted-foreground cursor-not-allowed'
+                        ? 'hover:scale-105'
+                        : 'cursor-not-allowed opacity-50'
                     }`}
+                    style={{
+                      backgroundColor: canUpload && ((uploadedFile && uploadType === 'video') || (scriptText && uploadType === 'script'))
+                        ? 'var(--accent-color)'
+                        : 'var(--muted)',
+                      color: canUpload && ((uploadedFile && uploadType === 'video') || (scriptText && uploadType === 'script'))
+                        ? 'white'
+                        : 'var(--muted-foreground)'
+                    }}
                   >
                     {isAnalyzing ? (
                       <span className="flex items-center gap-2">
@@ -290,19 +307,19 @@ export default function OptimizerPage() {
                   </h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FF6B6B] mt-0.5">◉</span>
+                      <span style={{ color: 'var(--accent-color)' }} className="mt-0.5">◉</span>
                       <span>Upload content before publishing to get trend-aligned suggestions</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FF6B6B] mt-0.5">◉</span>
+                      <span style={{ color: 'var(--accent-color)' }} className="mt-0.5">◉</span>
                       <span>Best results come from videos under 60 seconds</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FF6B6B] mt-0.5">◉</span>
+                      <span style={{ color: 'var(--accent-color)' }} className="mt-0.5">◉</span>
                       <span>Include captions and hashtags for more accurate analysis</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-[#FF6B6B] mt-0.5">◉</span>
+                      <span style={{ color: 'var(--accent-color)' }} className="mt-0.5">◉</span>
                       <span>Check trend alignment to maximize reach potential</span>
                     </li>
                   </ul>
