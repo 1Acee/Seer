@@ -20,10 +20,10 @@ export default function ProgressBar({ currentStep, show }: ProgressBarProps) {
 
   return (
     <div className="fixed top-12 left-1/2 -translate-x-1/2 w-[600px] h-1 rounded-full z-50" 
-         style={{ backgroundColor: 'rgba(232, 226, 219, 0.3)' }}>
+         style={{ backgroundColor: 'color-mix(in srgb, var(--border) 30%, transparent)' }}>
       <motion.div
         className="h-full rounded-full relative overflow-hidden"
-        style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7)' }}
+        className="bg-accent"
         initial={{ width: "0%" }}
         animate={{ width: `${progressPercentage[currentStep]}%` }}
         transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1] }}

@@ -59,7 +59,7 @@ export default function WatchlistSection() {
 
   const getStatusColor = (status: string) => {
     switch(status) {
-      case "heating": return "#FF6B6B";
+      case "heating": return "var(--accent-color)";
       case "cooling": return "#6B9FFF";
       case "stable": return "#9a8d7d";
       default: return "#9a8d7d";
@@ -76,15 +76,15 @@ export default function WatchlistSection() {
   };
 
   return (
-    <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 shadow-lg dark:shadow-black/30 
-                    border border-stone-200 dark:border-stone-800 transition-colors">
+    <div className="bg-card rounded-3xl p-6 shadow-lg dark:shadow-black/30 
+                    border border-border transition-colors">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-extralight text-stone-900 dark:text-stone-100 transition-colors">
+        <h2 className="text-2xl font-extralight text-foreground transition-colors">
           Watchlist
         </h2>
         <Link href="/watchlist">
-          <span className="text-xs text-stone-600 dark:text-stone-400 hover:text-stone-900 
+          <span className="text-xs text-muted-foreground hover:text-stone-900 
                          dark:hover:text-stone-100 transition-colors">
             View all →
           </span>
@@ -92,15 +92,15 @@ export default function WatchlistSection() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 mb-6 p-1 bg-stone-50 dark:bg-stone-800 rounded-2xl transition-colors">
+      <div className="flex items-center gap-1 mb-6 p-1 bg-secondary rounded-2xl transition-colors">
         {["all", "heating", "stable", "cooling"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab as any)}
             className={`flex-1 px-3 py-2 rounded-xl text-xs font-light transition-all
                        ${activeTab === tab 
-                         ? 'bg-white dark:bg-stone-700 shadow-sm text-stone-900 dark:text-stone-100' 
-                         : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'}`}
+                         ? 'bg-card shadow-sm text-foreground' 
+                         : 'text-muted-foreground hover:text-foreground'}`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
@@ -118,18 +118,18 @@ export default function WatchlistSection() {
             className="group"
           >
             <Link href={`/trends/${item.id}`}>
-              <div className="p-3 rounded-2xl hover:bg-stone-50 dark:hover:bg-stone-800 
+              <div className="p-3 rounded-2xl hover:bg-secondary 
                             transition-all cursor-pointer">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h4 className="text-sm font-light text-stone-900 dark:text-stone-100 mb-1 transition-colors">
+                    <h4 className="text-sm font-light text-foreground mb-1 transition-colors">
                       {item.name}
                     </h4>
                     <div className="flex items-center gap-3">
-                      <span className="text-xs text-stone-500 dark:text-stone-400 transition-colors">
+                      <span className="text-xs text-muted-foreground transition-colors">
                         {item.category}
                       </span>
-                      <span className="text-xs text-stone-400 dark:text-stone-500 transition-colors">
+                      <span className="text-xs text-muted-foreground transition-colors">
                         {item.lastUpdated}
                       </span>
                     </div>
@@ -160,16 +160,16 @@ export default function WatchlistSection() {
                     height: "auto",
                     transition: { duration: 0.2 }
                   }}
-                  className="mt-3 pt-3 border-t border-stone-100 dark:border-stone-800 
+                  className="mt-3 pt-3 border-t border-border 
                            opacity-0 group-hover:opacity-100"
                 >
                   <div className="flex items-center gap-3">
-                    <button className="text-xs text-stone-600 dark:text-stone-400 
-                                     hover:text-stone-900 dark:hover:text-stone-100 transition-colors">
+                    <button className="text-xs text-muted-foreground 
+                                     hover:text-foreground transition-colors">
                       Unfollow
                     </button>
-                    <button className="text-xs text-stone-600 dark:text-stone-400 
-                                     hover:text-stone-900 dark:hover:text-stone-100 transition-colors">
+                    <button className="text-xs text-muted-foreground 
+                                     hover:text-foreground transition-colors">
                       Set alert
                     </button>
                   </div>
@@ -183,8 +183,8 @@ export default function WatchlistSection() {
       {/* Empty state */}
       {filteredItems.length === 0 && (
         <div className="text-center py-8">
-          <span className="text-3xl text-stone-300 dark:text-stone-600">◯</span>
-          <p className="text-sm text-stone-500 dark:text-stone-400 mt-2 transition-colors">
+          <span className="text-3xl text-muted-foreground">◯</span>
+          <p className="text-sm text-muted-foreground mt-2 transition-colors">
             No items in this category
           </p>
         </div>

@@ -24,26 +24,20 @@ export default function Sidebar() {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="fixed left-0 top-0 h-screen w-72 z-40"
-      style={{ 
-        background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(224,217,201,0.9) 100%)',
-        borderRight: '1px solid rgba(186, 177, 174, 0.2)'
-      }}
+      className="fixed left-0 top-0 h-screen w-72 z-40 bg-background border-r border-border"
     >
       <div className="p-10">
         {/* Logo */}
         <div className="mb-16">
-          <h2 className="text-4xl font-extralight tracking-wide" 
-              style={{ 
-                fontFamily: 'Playfair Display, serif',
-                color: 'rgb(71, 70, 68)'
-              }}>
+          <h2 className="text-4xl font-extralight tracking-wide text-foreground font-['Playfair_Display']">
             Seer
           </h2>
-          <div className="w-16 h-px mt-4" 
-               style={{ 
-                 background: 'linear-gradient(90deg, rgb(218, 143, 143), transparent)'
-               }} />
+          <div 
+            className="w-16 h-px mt-4" 
+            style={{ 
+              background: 'linear-gradient(90deg, var(--accent-color), transparent)'
+            }} 
+          />
         </div>
 
         {/* Navigation */}
@@ -62,9 +56,9 @@ export default function Sidebar() {
                   className="relative flex items-center gap-4 px-6 py-4 rounded-2xl cursor-pointer transition-all"
                   style={{
                     background: isActive 
-                      ? 'rgba(255,255,255,0.8)' 
+                      ? 'var(--card)' 
                       : isHovered 
-                      ? 'rgba(255,255,255,0.4)' 
+                      ? 'var(--secondary)' 
                       : 'transparent'
                   }}
                 >
@@ -73,23 +67,27 @@ export default function Sidebar() {
                     <motion.div
                       layoutId="activeTab"
                       className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-12 rounded-full"
-                      style={{ background: 'rgb(218, 143, 143)' }}
+                      style={{ backgroundColor: 'var(--accent-color)' }}
                     />
                   )}
                   
                   {/* Symbol */}
-                  <span className="text-2xl" 
-                        style={{ 
-                          color: isActive ? 'rgb(71, 70, 68)' : 'rgb(145, 133, 116)' 
-                        }}>
+                  <span 
+                    className="text-2xl"
+                    style={{ 
+                      color: isActive ? 'var(--foreground)' : 'var(--muted-foreground)'
+                    }}
+                  >
                     {item.symbol}
                   </span>
                   
                   {/* Label */}
-                  <span className="text-sm font-light tracking-wide"
-                        style={{ 
-                          color: isActive ? 'rgb(71, 70, 68)' : 'rgb(145, 133, 116)' 
-                        }}>
+                  <span 
+                    className="text-sm font-light tracking-wide"
+                    style={{ 
+                      color: isActive ? 'var(--foreground)' : 'var(--muted-foreground)'
+                    }}
+                  >
                     {item.label}
                   </span>
                 </motion.div>
@@ -100,29 +98,27 @@ export default function Sidebar() {
 
         {/* User Profile Section */}
         <div className="absolute bottom-10 left-10 right-10">
-          <div className="p-6 rounded-2xl"
-               style={{ 
-                 background: 'rgba(224, 217, 201, 0.3)',
-                 border: '1px solid rgba(186, 177, 174, 0.2)'
-               }}>
+          <div className="p-6 rounded-2xl bg-secondary/50 border border-border">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center"
-                   style={{ background: 'rgb(186, 177, 174)' }}>
-                <span className="text-white text-sm">KJ</span>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-muted">
+                <span className="text-background text-sm">KJ</span>
               </div>
               <div>
-                <div className="text-sm font-light" style={{ color: 'rgb(71, 70, 68)' }}>
+                <div className="text-sm font-light text-foreground">
                   Kajal Patel
                 </div>
-                <div className="text-xs" style={{ color: 'rgb(145, 133, 116)' }}>
+                <div className="text-xs text-muted-foreground">
                   Pro Plan
                 </div>
               </div>
             </div>
-            <div className="text-xs" style={{ color: 'rgb(145, 133, 116)' }}>
+            <div className="text-xs text-muted-foreground">
               <div>3 uploads remaining</div>
               <div className="mt-2">
-                <span style={{ color: 'rgb(218, 143, 143)', cursor: 'pointer' }}>
+                <span 
+                  style={{ color: 'var(--accent-color)' }}
+                  className="cursor-pointer hover:opacity-80 transition-opacity"
+                >
                   Upgrade to Elite →
                 </span>
               </div>

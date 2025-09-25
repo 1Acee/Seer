@@ -78,7 +78,7 @@ export default function OnboardingPage() {
   };
 
 return (
-  <div className="w-screen h-screen overflow-hidden" style={{ background: '#fdfcfb' }}>
+  <div className="w-screen h-screen overflow-hidden bg-background">
     <Background />
     <ProgressBar currentStep={currentStep} show={currentStep !== "account"} />
     

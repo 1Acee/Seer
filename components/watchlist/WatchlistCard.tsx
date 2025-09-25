@@ -64,7 +64,7 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
   };
 
   const priorityColors = {
-    high: 'bg-red-500 dark:bg-red-400',
+    high: 'bg-accent',
     medium: 'bg-yellow-500 dark:bg-yellow-400',
     low: 'bg-green-500 dark:bg-green-400'
   };
@@ -72,7 +72,7 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
   if (viewMode === 'compact') {
     return (
       <div
-        className="bg-white dark:bg-stone-900 rounded-xl p-4 cursor-pointer border border-stone-200 dark:border-stone-800 transition-all duration-300 hover:border-stone-300 dark:hover:border-stone-700 hover:shadow-lg hover:scale-[1.01]"
+        className="bg-card rounded-xl p-4 cursor-pointer border border-border transition-all duration-300 hover:border-border hover:shadow-lg hover:scale-[1.01]"
         onClick={onClick}
         onMouseEnter={() => setShowActions(true)}
         onMouseLeave={() => setShowActions(false)}
@@ -90,14 +90,14 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
             {/* Trend info */}
             <div className="flex-1">
               <div className="flex items-center gap-3">
-                <h3 className="text-base font-light text-stone-900 dark:text-stone-100">
+                <h3 className="text-base font-light text-foreground">
                   {item.trend.name}
                 </h3>
-                <span className="text-xs px-2 py-0.5 bg-stone-100 dark:bg-stone-800 rounded-full">
+                <span className="text-xs px-2 py-0.5 bg-secondary rounded-full">
                   {item.trend.category}
                 </span>
               </div>
-              <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 {item.trend.seerScore} score • {item.trend.leadTime} days to peak • +{item.trend.velocity}% velocity
               </p>
             </div>
@@ -105,8 +105,8 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
             {/* Quick stats */}
             <div className="flex items-center gap-6 text-sm">
               <div>
-                <span className="text-stone-500">Tracking for</span>
-                <span className="ml-1 font-medium text-stone-700 dark:text-stone-300">
+                <span className="text-muted-foreground">Tracking for</span>
+                <span className="ml-1 font-medium text-secondary-foreground">
                   {daysTracking} days
                 </span>
               </div>
@@ -115,8 +115,8 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
                   onClick={handleAlertToggle}
                   className={`p-1.5 rounded-lg transition-all duration-300 transform hover:scale-110 ${
                     item.alertEnabled 
-                      ? 'bg-[#FF6B6B]/10 text-[#FF6B6B]' 
-                      : 'bg-stone-100 dark:bg-stone-800 text-stone-400'
+                      ? 'bg-accent/10 text-accent' 
+                      : 'bg-secondary text-muted-foreground'
                   }`}
                 >
                   {item.alertEnabled ? '🔔' : '🔕'}
@@ -142,14 +142,14 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
   // Cards view
   return (
     <div
-      className="bg-white dark:bg-stone-900 rounded-2xl p-6 cursor-pointer border border-stone-200 dark:border-stone-800 transition-all duration-300 hover:border-stone-300 dark:hover:border-stone-700 hover:shadow-xl hover:-translate-y-1 animate-fadeIn"
+      className="bg-card rounded-2xl p-6 cursor-pointer border border-border transition-all duration-300 hover:border-border hover:shadow-xl hover:-translate-y-1 animate-fadeIn"
       onClick={onClick}
     >
       {/* Header with priority and status */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-2">
           <div className={`w-2 h-2 rounded-full ${priorityColors[item.priority]} animate-pulse`} />
-          <span className="text-xs text-stone-500 capitalize">{item.priority} priority</span>
+          <span className="text-xs text-muted-foreground capitalize">{item.priority} priority</span>
         </div>
         <div className={`px-2 py-1 rounded-lg text-xs font-medium ${statusConfig[status].bg} ${statusConfig[status].color} transition-all duration-300`}>
           {statusConfig[status].icon} {statusConfig[status].label}
@@ -159,37 +159,37 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
       {/* Trend name and category */}
       <div className="mb-3">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs px-2 py-0.5 bg-stone-100 dark:bg-stone-800 rounded-full">
+          <span className="text-xs px-2 py-0.5 bg-secondary rounded-full">
             {item.trend.category}
           </span>
           {item.trend.crossPlatform && (
-            <span className="text-xs text-stone-500">◈ Cross-platform</span>
+            <span className="text-xs text-muted-foreground">◈ Cross-platform</span>
           )}
         </div>
-        <h3 className="text-lg font-light text-stone-900 dark:text-stone-100">
+        <h3 className="text-lg font-light text-foreground">
           {item.trend.name}
         </h3>
       </div>
 
       {/* Key metrics */}
       <div className="grid grid-cols-3 gap-3 mb-4">
-        <div className="text-center p-2 bg-stone-50 dark:bg-stone-800/50 rounded-lg transition-all duration-300 hover:bg-stone-100 dark:hover:bg-stone-800">
-          <div className="text-xl font-light text-stone-900 dark:text-stone-100">
+        <div className="text-center p-2 bg-background rounded-lg transition-all duration-300 hover:bg-secondary">
+          <div className="text-xl font-light text-foreground">
             {item.trend.seerScore}
           </div>
-          <div className="text-xs text-stone-500">Score</div>
+          <div className="text-xs text-muted-foreground">Score</div>
         </div>
-        <div className="text-center p-2 bg-stone-50 dark:bg-stone-800/50 rounded-lg transition-all duration-300 hover:bg-stone-100 dark:hover:bg-stone-800">
-          <div className="text-xl font-light text-stone-900 dark:text-stone-100">
+        <div className="text-center p-2 bg-background rounded-lg transition-all duration-300 hover:bg-secondary">
+          <div className="text-xl font-light text-foreground">
             {item.trend.leadTime}
           </div>
-          <div className="text-xs text-stone-500">Days</div>
+          <div className="text-xs text-muted-foreground">Days</div>
         </div>
-        <div className="text-center p-2 bg-stone-50 dark:bg-stone-800/50 rounded-lg transition-all duration-300 hover:bg-stone-100 dark:hover:bg-stone-800">
-          <div className="text-xl font-light text-stone-900 dark:text-stone-100">
+        <div className="text-center p-2 bg-background rounded-lg transition-all duration-300 hover:bg-secondary">
+          <div className="text-xl font-light text-foreground">
             +{item.trend.velocity}%
           </div>
-          <div className="text-xs text-stone-500">Velocity</div>
+          <div className="text-xs text-muted-foreground">Velocity</div>
         </div>
       </div>
 
@@ -201,7 +201,7 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
               `${(index / (item.trend.momentum.length - 1)) * 100},${30 - (value / 100) * 30}`
             ).join(' ')}
             fill="none"
-            stroke={status === 'heating' ? '#ea580c' : status === 'cooling' ? '#06b6d4' : '#3b82f6'}
+            stroke="var(--accent-color)"
             strokeWidth="1.5"
             className="animate-drawLine"
           />
@@ -209,24 +209,24 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
       </div>
 
       {/* Tracking info */}
-      <div className="flex items-center justify-between text-xs text-stone-500">
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span>Tracking for {daysTracking} days</span>
         <span>Added {new Date(item.addedDate).toLocaleDateString()}</span>
       </div>
 
       {/* Actions bar */}
-      <div className="flex items-center justify-between mt-4 pt-4 border-t border-stone-200 dark:border-stone-800">
+      <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
         <div className="flex items-center gap-2">
           {/* Priority buttons */}
-          <div className="flex items-center gap-1 bg-stone-100 dark:bg-stone-800 rounded-lg p-1">
+          <div className="flex items-center gap-1 bg-secondary rounded-lg p-1">
             {(['high', 'medium', 'low'] as const).map(p => (
               <button
                 key={p}
                 onClick={(e) => handlePriorityChange(e, p)}
                 className={`px-2 py-1 rounded text-xs transition-all duration-200 transform hover:scale-105 ${
                   item.priority === p
-                    ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 shadow-sm'
-                    : 'text-stone-500 hover:text-stone-700 dark:hover:text-stone-300'
+                    ? 'bg-card text-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-secondary-foreground'
                 }`}
               >
                 {p[0].toUpperCase()}
@@ -240,8 +240,8 @@ export default function WatchlistCard({ item, viewMode, onClick, status }: Watch
             onClick={handleAlertToggle}
             className={`p-2 rounded-lg transition-all duration-300 transform hover:scale-110 ${
               item.alertEnabled 
-                ? 'bg-[#FF6B6B]/10 text-[#FF6B6B] hover:bg-[#FF6B6B]/20' 
-                : 'bg-stone-100 dark:bg-stone-800 text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700'
+                ? 'bg-accent/10 text-accent hover:bg-accent/20' 
+                : 'bg-secondary text-muted-foreground hover:bg-muted'
             }`}
           >
             {item.alertEnabled ? '🔔' : '🔕'}

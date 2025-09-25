@@ -81,15 +81,15 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
-      className={`bg-white rounded-3xl p-8 shadow-lg ${className}`}
+      className={`bg-card rounded-3xl p-8 shadow-lg ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-3xl font-extralight text-stone-900 mb-2">
+          <h2 className="text-3xl font-extralight text-foreground mb-2">
             Category Spotlight
           </h2>
-          <p className="text-sm text-stone-500 font-light">
+          <p className="text-sm text-muted-foreground font-light">
             Top emerging trends by domain • Auto-rotating
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
         {/* Rotation control */}
         <button
           onClick={() => setIsRotating(!isRotating)}
-          className="text-sm text-stone-600 hover:text-stone-900 transition-colors"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           {isRotating ? 'Pause' : 'Resume'}
         </button>
@@ -116,8 +116,8 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
             whileTap={{ scale: 0.95 }}
             className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all
                        ${activeCategory === cat 
-                         ? 'bg-stone-900 text-white' 
-                         : 'bg-stone-100 text-stone-600 hover:bg-stone-200'}`}
+                         ? 'bg-foreground text-background' 
+                         : 'bg-secondary text-muted-foreground hover:bg-muted'}`}
           >
             <span className="text-lg">{categorySymbols[cat] || "◯"}</span>
             <span className="text-sm font-light capitalize">{cat}</span>
@@ -137,10 +137,10 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
             className="group"
           >
             <Link href={`/trends/${trend.id}`}>
-              <div className="p-5 rounded-2xl bg-stone-50 hover:bg-white hover:shadow-lg 
+              <div className="p-5 rounded-2xl bg-background hover:bg-card hover:shadow-lg 
                             transition-all duration-300 cursor-pointer">
                 {/* Trend name */}
-                <h3 className="text-base font-light text-stone-900 mb-3">
+                <h3 className="text-base font-light text-foreground mb-3">
                   {trend.name}
                 </h3>
                 
@@ -148,22 +148,22 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
                 <div className="space-y-2">
                   {/* Velocity */}
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-stone-500">Velocity</span>
+                    <span className="text-xs text-muted-foreground">Velocity</span>
                     <div className="flex items-center gap-1">
-                      <span className="text-sm text-stone-700">+{trend.velocity}%</span>
-                      <span style={{ color: '#FF6B6B' }}>↗</span>
+                      <span className="text-sm text-secondary-foreground">+{trend.velocity}%</span>
+                      <span style={{ color: 'var(--accent-color)' }}>↗</span>
                     </div>
                   </div>
                   
                   {/* Saturation bar */}
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-stone-500">Saturation</span>
+                    <span className="text-xs text-muted-foreground">Saturation</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-20 h-1 bg-stone-200 rounded-full overflow-hidden">
+                      <div className="w-20 h-1 bg-muted rounded-full overflow-hidden">
                         <motion.div 
                           className="h-full rounded-full"
                           style={{ 
-                            background: trend.saturation < 30 ? '#FF6B6B' : '#9a8d7d',
+                            background: trend.saturation < 30 ? 'var(--accent-color)' : '#9a8d7d',
                             width: `${trend.saturation}%`
                           }}
                           initial={{ width: 0 }}
@@ -171,7 +171,7 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
                           transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
                         />
                       </div>
-                      <span className="text-xs text-stone-600">{trend.saturation}%</span>
+                      <span className="text-xs text-muted-foreground">{trend.saturation}%</span>
                     </div>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
                 {/* Hover action */}
                 <div className="mt-4 pt-3 border-t border-stone-200 opacity-0 group-hover:opacity-100 
                               transition-opacity">
-                  <span className="text-xs" style={{ color: '#FF6B6B' }}>
+                  <span className="text-xs" style={{ color: 'var(--accent-color)' }}>
                     View analysis →
                   </span>
                 </div>
@@ -197,13 +197,13 @@ export default function CategorySpotlight({ categories, className = "" }: Catego
         className="mt-8 p-4 bg-gradient-to-r from-stone-50 to-transparent rounded-2xl"
       >
         <div className="flex items-start gap-3">
-          <span className="text-2xl" style={{ color: '#FF6B6B' }}>◎</span>
+          <span className="text-2xl" style={{ color: 'var(--accent-color)' }}>◎</span>
           <div>
-            <p className="text-sm text-stone-700 font-light mb-1">
+            <p className="text-sm text-secondary-foreground font-light mb-1">
               <strong className="font-medium">Insight:</strong> {activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} trends 
               are showing {trends[0]?.velocity > 20 ? 'exceptional' : 'strong'} growth patterns this week
             </p>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-muted-foreground">
               Consider creating content around low-saturation opportunities
             </p>
           </div>

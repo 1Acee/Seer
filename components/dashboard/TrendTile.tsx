@@ -61,7 +61,7 @@ export default function TrendTile({ trend, isHovered, variant = 'default' }: Tre
       className={`
         relative overflow-hidden
         ${isLarge ? 'col-span-2 row-span-2' : ''}
-        ${isLarge ? 'bg-gradient-to-br from-frozen via-white to-snow' : 'bg-white'}
+        ${isLarge ? 'bg-gradient-to-br from-frozen via-card to-snow' : 'bg-card'}
         dark:bg-gradient-to-br dark:from-night dark:via-night dark:to-earthy-umber
         rounded-3xl ${isLarge ? 'p-8' : 'p-6'}
         border border-temple/10 dark:border-earthy-umber/20
@@ -240,7 +240,7 @@ export default function TrendTile({ trend, isHovered, variant = 'default' }: Tre
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
         className={`absolute bottom-0 left-0 right-0 p-6 
-                   bg-gradient-to-t from-white via-white/95 to-transparent 
+                   bg-gradient-to-t from-card via-card/95 to-transparent 
                    dark:from-night dark:via-night/95`}
       >
         <div className="flex items-center justify-between">

@@ -29,11 +29,11 @@ export default function WatchlistStats({ watchlist, categorizedTrends }: Watchli
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
       {/* Total trends */}
-      <div className="bg-white dark:bg-stone-800/50 rounded-xl p-4">
-        <div className="text-2xl font-light text-stone-900 dark:text-stone-100">
+      <div className="bg-card rounded-xl p-4">
+        <div className="text-2xl font-light text-foreground">
           {watchlist.length}
         </div>
-        <div className="text-xs text-stone-500 mt-1">Total Trends</div>
+        <div className="text-xs text-muted-foreground mt-1">Total Trends</div>
       </div>
 
       {/* Heating up */}
@@ -70,19 +70,19 @@ export default function WatchlistStats({ watchlist, categorizedTrends }: Watchli
       </div>
 
       {/* Average lead time */}
-      <div className="bg-white dark:bg-stone-800/50 rounded-xl p-4">
-        <div className="text-2xl font-light text-stone-900 dark:text-stone-100">
+      <div className="bg-card rounded-xl p-4">
+        <div className="text-2xl font-light text-foreground">
           {avgLeadTime}d
         </div>
-        <div className="text-xs text-stone-500 mt-1">Avg Lead Time</div>
+        <div className="text-xs text-muted-foreground mt-1">Avg Lead Time</div>
       </div>
 
       {/* Average score */}
-      <div className="bg-white dark:bg-stone-800/50 rounded-xl p-4">
-        <div className="text-2xl font-light text-stone-900 dark:text-stone-100">
+      <div className="bg-card rounded-xl p-4">
+        <div className="text-2xl font-light text-foreground">
           {avgScore}
         </div>
-        <div className="text-xs text-stone-500 mt-1">Avg Score</div>
+        <div className="text-xs text-muted-foreground mt-1">Avg Score</div>
       </div>
     </div>
   );

@@ -33,13 +33,13 @@ export default function WatchlistFilters({
 
   const priorityOptions = [
     { value: 'all' as const, label: 'All Priorities' },
-    { value: 'high' as const, label: 'High', color: 'bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400' },
+    { value: 'high' as const, label: 'High', color: 'bg-accent/10 text-accent' },
     { value: 'medium' as const, label: 'Medium', color: 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400' },
     { value: 'low' as const, label: 'Low', color: 'bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400' }
   ];
 
   return (
-    <div className="px-8 py-4 border-b border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900">
+    <div className="px-8 py-4 border-b border-border bg-card">
       <div className="flex items-center justify-between gap-4">
         {/* Status filter */}
         <div className="flex items-center gap-2">
@@ -49,8 +49,8 @@ export default function WatchlistFilters({
               onClick={() => setFilterStatus(option.value)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 filterStatus === option.value
-                  ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900'
-                  : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700'
+                  ? 'bg-foreground text-background'
+                  : 'bg-secondary text-muted-foreground hover:bg-muted'
               }`}
             >
               <span className="mr-1.5">{option.icon}</span>
@@ -68,7 +68,7 @@ export default function WatchlistFilters({
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value as any)}
-            className="px-3 py-2 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-stone-200 dark:focus:ring-stone-700"
+            className="px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-border"
           >
             {priorityOptions.map(option => (
               <option key={option.value} value={option.value}>
@@ -81,7 +81,7 @@ export default function WatchlistFilters({
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-3 py-2 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-stone-200 dark:focus:ring-stone-700"
+            className="px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-border"
           >
             <option value="priority">Sort by Priority</option>
             <option value="added">Recently Added</option>

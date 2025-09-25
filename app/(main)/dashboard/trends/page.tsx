@@ -72,16 +72,16 @@ export default function TrendsPage() {
   }, [selectedCategories, saturationFilter, timeframe, sortBy, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-950">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="border-b border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 backdrop-blur-sm sticky top-0 z-20">
+      <div className="border-b border-border bg-white/80 dark:bg-card/80 backdrop-blur-sm sticky top-0 z-20">
         <div className="px-8 py-6">
           <div className="flex items-start justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-extralight text-stone-900 dark:text-stone-100 font-['Playfair_Display'] italic">
+              <h1 className="text-3xl font-extralight text-foreground font-['Playfair_Display'] italic">
                 All Trends
               </h1>
-              <p className="text-stone-500 dark:text-stone-400 text-sm mt-2">
+              <p className="text-muted-foreground text-sm mt-2">
                 {filteredTrends.length} trends discovered across {categories.length} categories
               </p>
             </div>
@@ -99,9 +99,9 @@ export default function TrendsPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search trends, categories, or hashtags..."
-              className="w-full pl-12 pr-4 py-3 bg-stone-100 dark:bg-stone-800 rounded-2xl text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B]/20"
+              className="w-full pl-12 pr-4 py-3 bg-secondary rounded-2xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)]/20"
             />
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">⊙</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">⊙</span>
           </div>
         </div>
       </div>
@@ -109,12 +109,12 @@ export default function TrendsPage() {
       {/* Main content with temporary filters */}
       <div className="flex">
         {/* Temporary filters sidebar */}
-        <div className="w-80 border-r border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-6">
-          <h3 className="text-lg font-light text-stone-900 dark:text-stone-100 mb-4">Filters</h3>
+        <div className="w-80 border-r border-border bg-card p-6">
+          <h3 className="text-lg font-light text-foreground mb-4">Filters</h3>
           
           {/* Simple category checkboxes */}
           <div className="mb-6">
-            <h4 className="text-sm text-stone-600 dark:text-stone-400 mb-2">Categories</h4>
+            <h4 className="text-sm text-muted-foreground mb-2">Categories</h4>
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {categories.map(category => (
                 <label key={category} className="flex items-center gap-2 cursor-pointer">
@@ -128,9 +128,9 @@ export default function TrendsPage() {
                         setSelectedCategories(selectedCategories.filter(c => c !== category));
                       }
                     }}
-                    className="w-4 h-4 rounded border-stone-300 text-[#FF6B6B] focus:ring-[#FF6B6B]"
+                    className="w-4 h-4 rounded border-border text-[var(--accent-color)] focus:ring-[var(--accent-color)]"
                   />
-                  <span className="text-sm text-stone-700 dark:text-stone-300">{category}</span>
+                  <span className="text-sm text-secondary-foreground">{category}</span>
                 </label>
               ))}
             </div>
@@ -138,11 +138,11 @@ export default function TrendsPage() {
 
           {/* Sort by */}
           <div className="mb-6">
-            <h4 className="text-sm text-stone-600 dark:text-stone-400 mb-2">Sort By</h4>
+            <h4 className="text-sm text-muted-foreground mb-2">Sort By</h4>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-3 py-2 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-lg text-sm"
+              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm"
             >
               <option value="score">Seer Score</option>
               <option value="velocity">Velocity</option>
@@ -159,7 +159,7 @@ export default function TrendsPage() {
               setSearchQuery('');
               setSortBy('score');
             }}
-            className="w-full px-4 py-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full hover:scale-105 transition-transform text-sm"
+            className="w-full px-4 py-2 bg-foreground text-background rounded-full hover:scale-105 transition-transform text-sm"
           >
             Clear all filters
           </button>
@@ -176,10 +176,10 @@ export default function TrendsPage() {
           ) : (
             <div className="flex flex-col items-center justify-center py-32">
               <div className="text-6xl mb-4 opacity-20">◯</div>
-              <h3 className="text-xl font-light text-stone-600 dark:text-stone-400 mb-2">
+              <h3 className="text-xl font-light text-muted-foreground mb-2">
                 No trends found
               </h3>
-              <p className="text-sm text-stone-500 dark:text-stone-500">
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground">
                 Try adjusting your filters or search query
               </p>
             </div>
@@ -194,32 +194,32 @@ export default function TrendsPage() {
           onClick={() => setSelectedTrend(null)}
         >
           <div 
-            className="bg-white dark:bg-stone-900 rounded-3xl p-8 max-w-2xl w-full"
+            className="bg-card rounded-3xl p-8 max-w-2xl w-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-light text-stone-900 dark:text-stone-100 mb-4">
+            <h2 className="text-2xl font-light text-foreground mb-4">
               {selectedTrend.name}
             </h2>
-            <p className="text-stone-600 dark:text-stone-400 mb-4">
+            <p className="text-muted-foreground mb-4">
               {selectedTrend.description}
             </p>
             <div className="grid grid-cols-3 gap-4 mb-4">
               <div>
                 <div className="text-2xl font-light">{selectedTrend.seerScore}</div>
-                <div className="text-sm text-stone-500">Seer Score</div>
+                <div className="text-sm text-muted-foreground">Seer Score</div>
               </div>
               <div>
                 <div className="text-2xl font-light">{selectedTrend.leadTime} days</div>
-                <div className="text-sm text-stone-500">To Peak</div>
+                <div className="text-sm text-muted-foreground">To Peak</div>
               </div>
               <div>
                 <div className="text-2xl font-light">+{selectedTrend.velocity}%</div>
-                <div className="text-sm text-stone-500">Velocity</div>
+                <div className="text-sm text-muted-foreground">Velocity</div>
               </div>
             </div>
             <button
               onClick={() => setSelectedTrend(null)}
-              className="w-full px-4 py-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full hover:scale-105 transition-transform"
+              className="w-full px-4 py-2 bg-foreground text-background rounded-full hover:scale-105 transition-transform"
             >
               Close
             </button>

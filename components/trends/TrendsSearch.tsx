@@ -41,12 +41,12 @@ export default function TrendsSearch({ searchQuery, setSearchQuery, resultCount 
     <div className="relative">
       <div
         className={`relative flex items-center rounded-2xl transition-all duration-200 ${
-          isFocused ? 'ring-2 ring-[#FF6B6B]/20 scale-[1.02]' : ''
+          isFocused ? 'ring-2 ring-accent/20 scale-[1.02]' : ''
         }`}
       >
         {/* Search icon */}
         <div className="absolute left-4 pointer-events-none">
-          <span className="text-stone-400 dark:text-stone-500 text-lg">
+          <span className="text-muted-foreground text-lg">
             ⊙
           </span>
         </div>
@@ -59,15 +59,15 @@ export default function TrendsSearch({ searchQuery, setSearchQuery, resultCount 
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder="Search trends, categories, or hashtags..."
-          className="w-full pl-12 pr-32 py-3 bg-stone-100 dark:bg-stone-800 rounded-2xl text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-500 focus:outline-none transition-colors"
+          className="w-full pl-12 pr-32 py-3 bg-secondary rounded-2xl text-foreground placeholder-muted-foreground focus:outline-none transition-colors"
         />
 
         {/* Right side actions */}
         <div className="absolute right-2 flex items-center gap-2">
           {/* Result count */}
           {localQuery && (
-            <div className="px-3 py-1 bg-white dark:bg-stone-900 rounded-full animate-fadeIn">
-              <span className="text-xs text-stone-600 dark:text-stone-400">
+            <div className="px-3 py-1 bg-card rounded-full animate-fadeIn">
+              <span className="text-xs text-muted-foreground">
                 {resultCount} results
               </span>
             </div>
@@ -77,14 +77,14 @@ export default function TrendsSearch({ searchQuery, setSearchQuery, resultCount 
           {localQuery && (
             <button
               onClick={handleClear}
-              className="p-2 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-full transition-all hover:rotate-90 animate-fadeIn"
+              className="p-2 hover:bg-muted rounded-full transition-all hover:rotate-90 animate-fadeIn"
             >
-              <span className="text-stone-500 dark:text-stone-400">✕</span>
+              <span className="text-muted-foreground">✕</span>
             </button>
           )}
 
           {/* Search button */}
-          <button className="px-4 py-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full hover:scale-105 transition-transform text-sm">
+          <button className="px-4 py-2 bg-foreground text-background rounded-full hover:scale-105 transition-transform text-sm">
             Search
           </button>
         </div>
@@ -92,8 +92,8 @@ export default function TrendsSearch({ searchQuery, setSearchQuery, resultCount 
 
       {/* Search suggestions */}
       {showSuggestions && !localQuery && isFocused && (
-        <div className="absolute top-full left-0 right-0 mt-2 p-4 bg-white dark:bg-stone-900 rounded-2xl shadow-xl border border-stone-200 dark:border-stone-800 z-10 animate-slideDown">
-          <p className="text-xs text-stone-500 dark:text-stone-400 mb-3">Popular searches</p>
+        <div className="absolute top-full left-0 right-0 mt-2 p-4 bg-card rounded-2xl shadow-xl border border-border z-10 animate-slideDown">
+          <p className="text-xs text-muted-foreground mb-3">Popular searches</p>
           <div className="flex flex-wrap gap-2">
             {['Glass Skin', 'AI Tools', 'Micro-HIIT', 'Silent Luxury', 'Dopamine Decor'].map(suggestion => (
               <button
@@ -102,7 +102,7 @@ export default function TrendsSearch({ searchQuery, setSearchQuery, resultCount 
                   setLocalQuery(suggestion);
                   setSearchQuery(suggestion);
                 }}
-                className="px-3 py-1.5 bg-stone-100 dark:bg-stone-800 rounded-full text-sm text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all hover:scale-105"
+                className="px-3 py-1.5 bg-secondary rounded-full text-sm text-secondary-foreground hover:bg-muted transition-all hover:scale-105"
               >
                 {suggestion}
               </button>

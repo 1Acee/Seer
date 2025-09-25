@@ -18,13 +18,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="w-screen h-screen overflow-hidden" style={{ background: '#fdfcfb' }}>
+    <main className="w-screen h-screen overflow-hidden bg-background">
       {/* Clean background - no extra elements */}
       <div className="fixed inset-0">
         {/* Simple base gradient */}
         <div className="absolute inset-0" 
              style={{ 
-               background: 'radial-gradient(ellipse at center, #faf8f6 0%, #f5f1ed 25%, #e8e2db 50%, #fdfcfb 100%)'
+               background: 'radial-gradient(ellipse at center, var(--background) 0%, var(--secondary) 25%, var(--border) 50%, var(--background) 100%)'
              }} />
       </div>
 
@@ -40,10 +40,10 @@ export default function Home() {
           >
             <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center"
                  style={{ 
-                   background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                   background: 'linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), #a855f7))',
                    boxShadow: '0 20px 40px rgba(99, 102, 241, 0.2)'
                  }}>
-              <TrendingUp className="w-8 h-8" style={{ color: '#fdfcfb' }} />
+              <TrendingUp className="w-8 h-8 text-primary-foreground" />
             </div>
           </motion.div>
 
@@ -52,7 +52,7 @@ export default function Home() {
             className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-light mb-8 leading-none"
             style={{ 
               fontFamily: 'Playfair Display, serif',
-              color: '#1c1917',
+              color: 'var(--foreground)',
               letterSpacing: '-0.02em'
             }}
             initial={{ y: 50, opacity: 0 }}
@@ -69,17 +69,17 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="h-[1px] w-32" style={{ background: 'linear-gradient(90deg, transparent, #d4cbc0)' }} />
-            <span className="text-xl tracking-[0.5em] uppercase font-light" style={{ color: '#9a8d7d' }}>
+            <div className="h-[1px] w-32" style={{ background: 'linear-gradient(90deg, transparent, var(--border))' }} />
+            <span className="text-xl tracking-[0.5em] uppercase font-light text-muted-foreground">
               Intelligence Awaits
             </span>
-            <div className="h-[1px] w-32" style={{ background: 'linear-gradient(90deg, #d4cbc0, transparent)' }} />
+            <div className="h-[1px] w-32" style={{ background: 'linear-gradient(90deg, var(--border), transparent)' }} />
           </motion.div>
 
           {/* Description */}
           <motion.p 
             className="text-2xl md:text-3xl font-light leading-relaxed max-w-4xl mx-auto mb-16"
-            style={{ color: '#7d7265' }}
+            className="text-muted-foreground"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
@@ -102,12 +102,12 @@ export default function Home() {
               >
                 <div className="relative px-16 py-6 rounded-full overflow-hidden"
                      style={{ 
-                       background: 'linear-gradient(135deg, #1c1917, #4a433b)',
+                       background: 'linear-gradient(135deg, var(--foreground), var(--card))',
                        boxShadow: '0 30px 60px rgba(28, 25, 23, 0.3)'
                      }}>
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                       style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)' }} />
-                  <span className="relative flex items-center gap-4 text-xl font-light" style={{ color: '#fdfcfb' }}>
+                       className="bg-accent" />
+                  <span className="relative flex items-center gap-4 text-xl font-light text-primary-foreground">
                     Begin Your Journey
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
                   </span>
@@ -127,11 +127,11 @@ export default function Home() {
               <div key={text} className="flex items-center gap-3">
                 <motion.div 
                   className="w-2 h-2 rounded-full"
-                  style={{ background: '#6366f1' }}
+                  className="bg-accent"
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
                 />
-                <span className="text-base" style={{ color: '#b8ab9b' }}>{text}</span>
+                <span className="text-base text-muted-foreground">{text}</span>
               </div>
             ))}
           </motion.div>

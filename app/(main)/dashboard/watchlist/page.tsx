@@ -76,10 +76,10 @@ export default function WatchlistPage() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-950">
-      <div className="border-b border-stone-200 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80">
+    <div className="min-h-screen bg-background">
+      <div className="border-b border-border bg-card/80">
         <div className="px-8 py-6">
-          <h1 className="text-3xl font-light text-stone-900 dark:text-stone-100 mb-6">
+          <h1 className="text-3xl font-light text-foreground mb-6">
             Your Watchlist - Debug Mode (Filters added)
           </h1>
           
@@ -108,7 +108,7 @@ export default function WatchlistPage() {
       />
       
       <div className="p-8">
-        <p className="text-stone-600 dark:text-stone-400 mb-8">
+        <p className="text-muted-foreground mb-8">
           Showing {filteredWatchlist.length} of {watchlistCount} trends
         </p>
         

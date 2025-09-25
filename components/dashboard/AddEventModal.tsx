@@ -102,16 +102,16 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
       />
       
       {/* Modal */}
-      <div className="relative bg-white rounded-3xl shadow-2xl border border-stone-200 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-card rounded-3xl shadow-2xl border border-border w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-stone-200">
+        <div className="px-6 py-4 border-b border-border">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-light font-['Playfair_Display'] text-stone-900">
+            <h2 className="text-xl font-light font-['Playfair_Display'] text-foreground">
               Add Event
             </h2>
             <button
               onClick={onClose}
-              className="p-2 rounded-xl hover:bg-stone-100 transition-colors text-stone-500 hover:text-stone-700"
+              className="p-2 rounded-xl hover:bg-secondary transition-colors text-muted-foreground hover:text-secondary-foreground"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m18 6-12 12"/>
@@ -125,7 +125,7 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Event Title */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">
+            <label className="block text-sm font-medium text-secondary-foreground mb-2">
               Event Title *
             </label>
             <input
@@ -136,7 +136,7 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
               className={`
                 w-full px-4 py-3 rounded-xl border transition-colors
                 focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent
-                ${errors.title ? 'border-red-300 bg-red-50' : 'border-stone-300 bg-white'}
+                ${errors.title ? 'border-red-300 bg-red-50' : 'border-border bg-card'}
               `}
             />
             {errors.title && (
@@ -146,7 +146,7 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
 
           {/* Event Type */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">
+            <label className="block text-sm font-medium text-secondary-foreground mb-2">
               Event Type
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -159,7 +159,7 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
                     p-3 rounded-xl border transition-all text-left capitalize
                     ${formData.type === type
                       ? 'border-coral bg-coral/10 text-coral'
-                      : 'border-stone-200 hover:border-stone-300 text-stone-700'
+                      : 'border-border hover:border-border text-secondary-foreground'
                     }
                   `}
                 >
@@ -175,18 +175,18 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
           {/* Date and Time */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
+              <label className="block text-sm font-medium text-secondary-foreground mb-2">
                 Date *
               </label>
               <input
                 type="date"
                 value={formatDateForInput(formData.date)}
                 onChange={(e) => handleInputChange('date', e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+                className="w-full px-4 py-3 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
+              <label className="block text-sm font-medium text-secondary-foreground mb-2">
                 Time *
               </label>
               <input
@@ -196,7 +196,7 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
                 className={`
                   w-full px-4 py-3 rounded-xl border transition-colors
                   focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent
-                  ${errors.time ? 'border-red-300 bg-red-50' : 'border-stone-300 bg-white'}
+                  ${errors.time ? 'border-red-300 bg-red-50' : 'border-border bg-card'}
                 `}
               />
               {errors.time && (
@@ -207,7 +207,7 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">
+            <label className="block text-sm font-medium text-secondary-foreground mb-2">
               Description
             </label>
             <textarea
@@ -215,13 +215,13 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
               onChange={(e) => handleInputChange('description', e.target.value)}
               placeholder="Add details about this event..."
               rows={3}
-              className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent resize-none"
+              className="w-full px-4 py-3 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent resize-none"
             />
           </div>
 
           {/* Preset Event Types for Quick Add */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-3">
+            <label className="block text-sm font-medium text-secondary-foreground mb-3">
               Quick Add
             </label>
             <div className="grid grid-cols-1 gap-2">
@@ -242,13 +242,13 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
                       description: preset.description
                     }));
                   }}
-                  className="text-left p-3 rounded-xl border border-stone-200 hover:border-coral hover:bg-coral/5 transition-colors"
+                  className="text-left p-3 rounded-xl border border-border hover:border-coral hover:bg-coral/5 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-lg">{getTypeIcon(preset.type)}</span>
                     <div>
-                      <div className="font-medium text-stone-900">{preset.title}</div>
-                      <div className="text-xs text-stone-600">{preset.description}</div>
+                      <div className="font-medium text-foreground">{preset.title}</div>
+                      <div className="text-xs text-muted-foreground">{preset.description}</div>
                     </div>
                   </div>
                 </button>
@@ -258,16 +258,16 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
 
           {/* Notification Settings */}
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-3">
+            <label className="block text-sm font-medium text-secondary-foreground mb-3">
               Notifications
             </label>
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 rounded-xl border border-stone-200">
+              <div className="flex items-center justify-between p-3 rounded-xl border border-border">
                 <div className="flex items-center gap-3">
                   <span className="text-lg">🔔</span>
                   <div>
-                    <div className="font-medium text-stone-900">Push Notification</div>
-                    <div className="text-xs text-stone-600">Get notified when event starts</div>
+                    <div className="font-medium text-foreground">Push Notification</div>
+                    <div className="text-xs text-muted-foreground">Get notified when event starts</div>
                   </div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -280,16 +280,16 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
                     }))}
                     className="sr-only peer"
                   />
-                  <div className="relative w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-coral rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-coral"></div>
+                  <div className="relative w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-coral rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-coral"></div>
                 </label>
               </div>
               
-              <div className="flex items-center justify-between p-3 rounded-xl border border-stone-200">
+              <div className="flex items-center justify-between p-3 rounded-xl border border-border">
                 <div className="flex items-center gap-3">
                   <span className="text-lg">⏰</span>
                   <div>
-                    <div className="font-medium text-stone-900">Remind me</div>
-                    <div className="text-xs text-stone-600">Send reminder before event</div>
+                    <div className="font-medium text-foreground">Remind me</div>
+                    <div className="text-xs text-muted-foreground">Send reminder before event</div>
                   </div>
                 </div>
                 <select
@@ -298,7 +298,7 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
                     ...prev,
                     reminderTime: e.target.value
                   }))}
-                  className="px-3 py-1 rounded-lg border border-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-coral"
+                  className="px-3 py-1 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-coral"
                 >
                   <option value="0">At event time</option>
                   <option value="5">5 minutes before</option>
@@ -312,11 +312,11 @@ export default function AddEventModal({ isOpen, onClose, onSave, selectedDate }:
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-200">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 rounded-xl border border-stone-300 text-stone-700 hover:bg-stone-50 transition-colors"
+              className="px-6 py-2 rounded-xl border border-border text-secondary-foreground hover:bg-secondary transition-colors"
             >
               Cancel
             </button>

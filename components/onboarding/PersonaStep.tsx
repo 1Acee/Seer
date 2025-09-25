@@ -130,7 +130,7 @@ export default function PersonaStep({ onPersonaSelect }: PersonaStepProps) {
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       className="absolute inset-0"
-    style={{ background: 'linear-gradient(to bottom, rgba(255, 107, 107, 0.05), transparent)' }}
+    style={{ background: 'linear-gradient(to bottom, rgba(var(--accent-rgb), 0.05), transparent)' }}
                     />
                   )}
                   
@@ -225,7 +225,7 @@ export default function PersonaStep({ onPersonaSelect }: PersonaStepProps) {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className="absolute inset-0"
-    style={{ background: 'linear-gradient(to bottom, rgba(255, 107, 107, 0.05), transparent)' }} 
+    style={{ background: 'linear-gradient(to bottom, rgba(var(--accent-rgb), 0.05), transparent)' }} 
                     >
                       <motion.div
                         initial={{ scale: 0 }}
