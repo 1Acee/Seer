@@ -77,51 +77,54 @@ export default function OnboardingPage() {
     }
   };
 
-return (
-  <div className="w-screen h-screen overflow-hidden bg-background">
-    <Background />
-    <ProgressBar currentStep={currentStep} show={currentStep !== "account"} />
-    
-    <div className="relative w-screen h-screen flex items-center justify-center">
-      <AnimatePresence mode="wait">
-        {currentStep === "account" && (
-          <AccountStep
-            accountData={accountData}
-            setAccountData={setAccountData}
-            onSubmit={handleAccountSubmit}
-            errors={errors}
-          />
-        )}
-        
-        {currentStep === "persona" && (
-          <PersonaStep 
-            onPersonaSelect={(personaId) => {
-              setSelectedPersona(personaId);
-              setCurrentStep("categories");
-            }} 
-          />
-        )}
+  const handleCategoriesComplete = () => {
+    // Save selected categories to localStorage when completing this step
+    localStorage.setItem('userSelectedCategories', JSON.stringify(selectedCategories));
+    setCurrentStep("complete");
+  };
 
-{currentStep === "categories" && (
-  <CategoryStep
-    selectedCategories={selectedCategories}
-    onCategoriesChange={setSelectedCategories}
-    onComplete={() => setCurrentStep("complete")}
-  />
-)}
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-background">
+      <Background />
+      <ProgressBar currentStep={currentStep} show={currentStep !== "account"} />
+      
+      <div className="relative w-screen h-screen flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          {currentStep === "account" && (
+            <AccountStep
+              accountData={accountData}
+              setAccountData={setAccountData}
+              onSubmit={handleAccountSubmit}
+              errors={errors}
+            />
+          )}
+          
+          {currentStep === "persona" && (
+            <PersonaStep 
+              onPersonaSelect={(personaId) => {
+                setSelectedPersona(personaId);
+                setCurrentStep("categories");
+              }} 
+            />
+          )}
 
-{currentStep === "complete" && (
-  <CompletionStep
-    userName={accountData.name}
-    selectedPersona={selectedPersona}
-    selectedCategories={selectedCategories}
-  />
-)}
+          {currentStep === "categories" && (
+            <CategoryStep
+              selectedCategories={selectedCategories}
+              onCategoriesChange={setSelectedCategories}
+              onComplete={handleCategoriesComplete}
+            />
+          )}
 
-        {/* Add categories step next */}
-        
-      </AnimatePresence>
+          {currentStep === "complete" && (
+            <CompletionStep
+              userName={accountData.name}
+              selectedPersona={selectedPersona}
+              selectedCategories={selectedCategories}
+            />
+          )}
+        </AnimatePresence>
+      </div>
     </div>
-  </div>
-);
+  );
 }

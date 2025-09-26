@@ -1,9 +1,9 @@
+// File: components/trends/TrendsFilters.tsx
 'use client';
-
-import { categories } from '@/utils/mockTrendsData';
 
 interface TrendsFiltersProps {
   selectedCategories: string[];
+  availableCategories: string[]; // Now passed from parent
   onCategoryToggle: (category: string) => void;
   saturationFilter: string;
   setSaturationFilter: (value: string) => void;
@@ -17,6 +17,7 @@ interface TrendsFiltersProps {
 
 export default function TrendsFilters({
   selectedCategories,
+  availableCategories, // Use this instead of imported categories
   onCategoryToggle,
   saturationFilter,
   setSaturationFilter,
@@ -134,45 +135,51 @@ export default function TrendsFilters({
         </div>
       </div>
 
-      {/* Categories */}
+      {/* Categories - Now using availableCategories */}
       <div>
         <h4 className="text-sm font-light text-muted-foreground mb-3">
-          Categories ({selectedCategories.length})
+          Your Categories ({availableCategories.length})
         </h4>
-        <div className="space-y-2 max-h-96 overflow-y-auto">
-          {categories.map(category => (
-            <label
-              key={category}
-              className="flex items-center gap-3 cursor-pointer group"
-            >
-              <div className="relative">
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes(category)}
-                  onChange={() => onCategoryToggle(category)}
-                  className="sr-only"
-                />
-                <div className={`w-4 h-4 rounded transition-all ${
-                  selectedCategories.includes(category)
-                    ? 'bg-[var(--accent-color)] border-[var(--accent-color)] scale-110'
-                    : 'border-2 border-border group-hover:border-muted-foreground'
-                }`}>
-                  {selectedCategories.includes(category) && (
-                    <svg className="w-4 h-4 text-white animate-checkmark" viewBox="0 0 16 16">
-                      <path
-                        fill="currentColor"
-                        d="M13.5 3.5L6 11l-3.5-3.5L1 9l5 5L15 5z"
-                      />
-                    </svg>
-                  )}
+        {availableCategories.length > 0 ? (
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {availableCategories.map(category => (
+              <label
+                key={category}
+                className="flex items-center gap-3 cursor-pointer group"
+              >
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category)}
+                    onChange={() => onCategoryToggle(category)}
+                    className="sr-only"
+                  />
+                  <div className={`w-4 h-4 rounded transition-all ${
+                    selectedCategories.includes(category)
+                      ? 'bg-[var(--accent-color)] border-[var(--accent-color)] scale-110'
+                      : 'border-2 border-border group-hover:border-muted-foreground'
+                  }`}>
+                    {selectedCategories.includes(category) && (
+                      <svg className="w-4 h-4 text-white animate-checkmark" viewBox="0 0 16 16">
+                        <path
+                          fill="currentColor"
+                          d="M13.5 3.5L6 11l-3.5-3.5L1 9l5 5L15 5z"
+                        />
+                      </svg>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <span className="text-sm text-secondary-foreground">
-                {category}
-              </span>
-            </label>
-          ))}
-        </div>
+                <span className="text-sm text-secondary-foreground">
+                  {category}
+                </span>
+              </label>
+            ))}
+          </div>
+        ) : (
+          <div className="text-sm text-muted-foreground italic">
+            No categories selected during onboarding
+          </div>
+        )}
       </div>
 
       {/* Quick filters */}

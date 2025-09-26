@@ -1,25 +1,65 @@
+// File: app/(main)/dashboard/trends/page.tsx
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import TrendsGrid from '@/components/trends/TrendsGrid';
+import TrendsFilters from '@/components/trends/TrendsFilters';
 import ViewToggle from '@/components/trends/ViewToggle';
-import { mockTrends, categories, TrendData } from '@/utils/mockTrendsData';
+import SwipeMode from '@/components/trends/SwipeMode';
+import { mockTrends, TrendData } from '@/utils/mockTrendsData';
 
 export default function TrendsPage() {
-  // State management
+  // Get user's selected categories from localStorage
+  const [userCategories, setUserCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [saturationFilter, setSaturationFilter] = useState<string>('all');
   const [timeframe, setTimeframe] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('score');
   const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list' | 'swipe'>('grid');
   const [selectedTrend, setSelectedTrend] = useState<TrendData | null>(null);
 
-  // Filter and sort trends
+  // Load user's selected categories from localStorage
+  useEffect(() => {
+    const savedCategories = localStorage.getItem('userSelectedCategories');
+    if (savedCategories) {
+      const categories = JSON.parse(savedCategories);
+      // Map the category IDs to proper labels
+      const categoryLabels = categories.map((id: string) => {
+        const categoryMap: { [key: string]: string } = {
+          'beauty': 'Beauty',
+          'fashion': 'Fashion',
+          'food': 'Food & Beverage',
+          'fitness': 'Fitness',
+          'tech': 'Technology',
+          'finance': 'Finance',
+          'lifestyle': 'Lifestyle',
+          'gaming': 'Gaming',
+          'music': 'Music',
+          'home': 'Home & DIY',
+          'photography': 'Photography',
+          'automotive': 'Automotive',
+          'travel': 'Travel',
+          'education': 'Education'
+        };
+        return categoryMap[id] || id;
+      });
+      setUserCategories(categoryLabels);
+    }
+  }, []);
+
+  // Filter trends to only show those in user's selected categories
   const filteredTrends = useMemo(() => {
     let filtered = [...mockTrends];
 
-    // Category filter
+    // First, filter by user's onboarding categories
+    if (userCategories.length > 0) {
+      filtered = filtered.filter(trend => 
+        userCategories.includes(trend.category)
+      );
+    }
+
+    // Then apply additional filters
     if (selectedCategories.length > 0) {
       filtered = filtered.filter(trend => 
         selectedCategories.includes(trend.category)
@@ -33,9 +73,9 @@ export default function TrendsPage() {
       );
     }
 
-    // Timeframe filter (by lead time)
+    // Timeframe filter
     if (timeframe !== 'all') {
-      const maxDays = timeframe === '7' ? 7 : timeframe === '14' ? 14 : 30;
+      const maxDays = parseInt(timeframe);
       filtered = filtered.filter(trend => trend.leadTime <= maxDays);
     }
 
@@ -64,16 +104,43 @@ export default function TrendsPage() {
       case 'recent':
         filtered.sort((a, b) => b.lastUpdated.getTime() - a.lastUpdated.getTime());
         break;
-      default:
-        break;
     }
 
     return filtered;
-  }, [selectedCategories, saturationFilter, timeframe, sortBy, searchQuery]);
+  }, [userCategories, selectedCategories, saturationFilter, timeframe, sortBy, searchQuery]);
+
+  const handleCategoryToggle = (category: string) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter(c => c !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  const handleClearAll = () => {
+    setSelectedCategories([]);
+    setSaturationFilter('all');
+    setTimeframe('all');
+    setSortBy('score');
+  };
+
+  const activeFilterCount = selectedCategories.length + 
+    (saturationFilter !== 'all' ? 1 : 0) + 
+    (timeframe !== 'all' ? 1 : 0);
+
+  // If in swipe mode, render SwipeMode component
+  if (viewMode === 'swipe') {
+    return (
+      <SwipeMode 
+        trends={filteredTrends} 
+        onClose={() => setViewMode('grid')}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header - Fixed to use proper background */}
+      {/* Header */}
       <div className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-20">
         <div className="px-8 py-6">
           <div className="flex items-start justify-between mb-6">
@@ -82,11 +149,10 @@ export default function TrendsPage() {
                 All Trends
               </h1>
               <p className="text-muted-foreground text-sm mt-2">
-                {filteredTrends.length} trends discovered across {categories.length} categories
+                {filteredTrends.length} trends discovered in your {userCategories.length} selected categories
               </p>
             </div>
             
-            {/* View controls */}
             <div className="flex items-center gap-4">
               <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
             </div>
@@ -111,178 +177,21 @@ export default function TrendsPage() {
 
       {/* Main content with filters */}
       <div className="flex">
-        {/* Filters sidebar with custom checkbox styling */}
-        <div className="w-80 border-r border-border bg-card p-6">
-          <h3 className="text-lg font-light text-foreground mb-4">Filters</h3>
-          
-          {/* Category checkboxes with custom styling */}
-          <div className="mb-6">
-            <h4 className="text-sm text-muted-foreground mb-2">Categories</h4>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
-              {categories.map(category => (
-                <label key={category} className="flex items-center gap-3 cursor-pointer group">
-                  <div className="relative">
-                    <input
-                      type="checkbox"
-                      checked={selectedCategories.includes(category)}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedCategories([...selectedCategories, category]);
-                        } else {
-                          setSelectedCategories(selectedCategories.filter(c => c !== category));
-                        }
-                      }}
-                      className="sr-only"
-                    />
-                    <div 
-                      className={`w-4 h-4 rounded transition-all ${
-                        selectedCategories.includes(category)
-                          ? 'scale-110'
-                          : 'border-2 border-border group-hover:border-muted-foreground'
-                      }`}
-                      style={{
-                        backgroundColor: selectedCategories.includes(category) 
-                          ? 'var(--accent-color)' 
-                          : 'transparent',
-                        borderColor: selectedCategories.includes(category)
-                          ? 'var(--accent-color)'
-                          : undefined
-                      }}
-                    >
-                      {selectedCategories.includes(category) && (
-                        <svg className="w-4 h-4 text-white" viewBox="0 0 16 16">
-                          <path
-                            fill="currentColor"
-                            d="M13.5 3.5L6 11l-3.5-3.5L1 9l5 5L15 5z"
-                          />
-                        </svg>
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-sm text-secondary-foreground">
-                    {category}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Sort by */}
-          <div className="mb-6">
-            <h4 className="text-sm text-muted-foreground mb-2">Sort By</h4>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2"
-              style={{
-                '--tw-ring-color': 'rgba(var(--accent-rgb), 0.2)'
-              } as React.CSSProperties}
-            >
-              <option value="score">Seer Score</option>
-              <option value="velocity">Velocity</option>
-              <option value="leadTime">Lead Time</option>
-              <option value="recent">Recently Updated</option>
-            </select>
-          </div>
-
-          {/* Timeframe filter with radio buttons */}
-          <div className="mb-6">
-            <h4 className="text-sm text-muted-foreground mb-3">Peak Timeframe</h4>
-            <div className="space-y-2">
-              {[
-                { value: 'all', label: 'All timeframes' },
-                { value: '7', label: 'Next 7 days' },
-                { value: '14', label: 'Next 14 days' },
-                { value: '30', label: 'Next 30 days' }
-              ].map(option => (
-                <label
-                  key={option.value}
-                  className="flex items-center gap-3 cursor-pointer group"
-                >
-                  <div className="relative">
-                    <input
-                      type="radio"
-                      name="timeframe"
-                      value={option.value}
-                      checked={timeframe === option.value}
-                      onChange={(e) => setTimeframe(e.target.value)}
-                      className="sr-only"
-                    />
-                    <div 
-                      className={`w-4 h-4 rounded-full border-2 transition-all ${
-                        timeframe === option.value
-                          ? ''
-                          : 'border-border group-hover:border-muted-foreground'
-                      }`}
-                      style={{
-                        borderColor: timeframe === option.value 
-                          ? 'var(--accent-color)' 
-                          : undefined,
-                        backgroundColor: timeframe === option.value 
-                          ? 'var(--accent-color)' 
-                          : 'transparent'
-                      }}
-                    >
-                      {timeframe === option.value && (
-                        <div className="w-1.5 h-1.5 bg-white rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-sm text-secondary-foreground">
-                    {option.label}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Saturation filter */}
-          <div className="mb-6">
-            <h4 className="text-sm text-muted-foreground mb-3">Saturation Level</h4>
-            <div className="grid grid-cols-2 gap-2">
-              {[
-                { value: 'all', label: 'All' },
-                { value: 'low', label: 'Low' },
-                { value: 'medium', label: 'Medium' },
-                { value: 'high', label: 'High' }
-              ].map(option => (
-                <button
-                  key={option.value}
-                  onClick={() => setSaturationFilter(option.value)}
-                  className={`px-3 py-2 rounded-xl text-sm transition-all transform hover:scale-105 ${
-                    saturationFilter === option.value
-                      ? 'ring-2'
-                      : 'bg-secondary text-muted-foreground hover:bg-muted'
-                  }`}
-                  style={{
-                    backgroundColor: saturationFilter === option.value 
-                      ? 'rgba(var(--accent-rgb), 0.1)' 
-                      : undefined,
-                    color: saturationFilter === option.value 
-                      ? 'var(--accent-color)' 
-                      : undefined,
-                    '--tw-ring-color': 'var(--accent-color)'
-                  } as React.CSSProperties}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <button
-            onClick={() => {
-              setSelectedCategories([]);
-              setSaturationFilter('all');
-              setTimeframe('all');
-              setSearchQuery('');
-              setSortBy('score');
-            }}
-            className="w-full px-4 py-2 rounded-full hover:scale-105 transition-transform text-sm text-white"
-            style={{ backgroundColor: 'var(--accent-color)' }}
-          >
-            Clear all filters
-          </button>
+        {/* Filters sidebar */}
+        <div className="w-80 border-r border-border bg-card">
+          <TrendsFilters
+            selectedCategories={selectedCategories}
+            availableCategories={userCategories} // Pass user's categories
+            onCategoryToggle={handleCategoryToggle}
+            saturationFilter={saturationFilter}
+            setSaturationFilter={setSaturationFilter}
+            timeframe={timeframe}
+            setTimeframe={setTimeframe}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            onClearAll={handleClearAll}
+            activeFilterCount={activeFilterCount}
+          />
         </div>
 
         {/* Trends grid/list */}

@@ -24,9 +24,9 @@ export default function Sidebar() {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="fixed left-0 top-0 h-screen w-72 z-40 bg-background border-r border-border"
+      className="fixed left-0 top-0 h-screen w-72 z-40 bg-background border-r border-border flex flex-col"
     >
-      <div className="p-10">
+      <div className="flex-1 flex flex-col p-10">
         {/* Logo */}
         <div className="mb-16">
           <h2 className="text-4xl font-extralight tracking-wide text-foreground font-['Playfair_Display']">
@@ -40,8 +40,8 @@ export default function Sidebar() {
           />
         </div>
 
-        {/* Navigation */}
-        <nav className="space-y-1">
+        {/* Navigation - Now with flex-1 to take available space */}
+        <nav className="flex-1 space-y-1">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href;
             const isHovered = hoveredItem === item.id;
@@ -96,8 +96,8 @@ export default function Sidebar() {
           })}
         </nav>
 
-        {/* User Profile Section */}
-        <div className="absolute bottom-10 left-10 right-10">
+        {/* User Profile Section - Now properly spaced with margin-top */}
+        <div className="mt-auto pt-8">
           <div className="p-6 rounded-2xl bg-secondary/50 border border-border">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-10 h-10 rounded-full flex items-center justify-center bg-muted">
