@@ -1,4 +1,4 @@
-// File: app/onboarding/page.tsx
+// app/onboarding/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -17,10 +17,7 @@ interface AccountData {
   name: string;
   businessName?: string;
   email: string;
-  phone: string;
-  username: string;
   password: string;
-  confirmPassword: string;
 }
 
 export default function OnboardingPage() {
@@ -31,10 +28,7 @@ export default function OnboardingPage() {
     name: "",
     businessName: "",
     email: "",
-    phone: "",
-    username: "",
-    password: "",
-    confirmPassword: ""
+    password: ""
   });
   
   const [selectedPersona, setSelectedPersona] = useState<string>("");
@@ -55,15 +49,19 @@ export default function OnboardingPage() {
   const validateAccountData = () => {
     const newErrors: Partial<AccountData> = {};
     
-    if (!accountData.name.trim()) newErrors.name = "Required";
-    if (!accountData.email.trim()) newErrors.email = "Required";
-    else if (!/\S+@\S+\.\S+/.test(accountData.email)) newErrors.email = "Invalid email";
-    if (!accountData.phone.trim()) newErrors.phone = "Required";
-    if (!accountData.username.trim()) newErrors.username = "Required";
-    if (!accountData.password) newErrors.password = "Required";
-    else if (accountData.password.length < 8) newErrors.password = "Min 8 characters";
-    if (accountData.password !== accountData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords don't match";
+    // Check if it's business account (has businessName) or personal (has name)
+    if (!accountData.businessName && !accountData.name.trim()) {
+      newErrors.name = "Required";
+    }
+    if (!accountData.email.trim()) {
+      newErrors.email = "Required";
+    } else if (!/\S+@\S+\.\S+/.test(accountData.email)) {
+      newErrors.email = "Invalid email";
+    }
+    if (!accountData.password) {
+      newErrors.password = "Required";
+    } else if (accountData.password.length < 8) {
+      newErrors.password = "Min 8 characters";
     }
     
     setErrors(newErrors);
@@ -78,20 +76,20 @@ export default function OnboardingPage() {
   };
 
   const handleCategoriesComplete = () => {
-    // Save selected categories to localStorage when completing this step
     localStorage.setItem('userSelectedCategories', JSON.stringify(selectedCategories));
     setCurrentStep("complete");
   };
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-background">
+    <div className="w-full min-h-screen overflow-hidden bg-background">
       <Background />
-      <ProgressBar currentStep={currentStep} show={currentStep !== "account"} />
+      <ProgressBar currentStep={currentStep} />
       
-      <div className="relative w-screen h-screen flex items-center justify-center">
+      <div className="relative w-full min-h-screen">
         <AnimatePresence mode="wait">
           {currentStep === "account" && (
             <AccountStep
+              key="account"
               accountData={accountData}
               setAccountData={setAccountData}
               onSubmit={handleAccountSubmit}
@@ -101,6 +99,7 @@ export default function OnboardingPage() {
           
           {currentStep === "persona" && (
             <PersonaStep 
+              key="persona"
               onPersonaSelect={(personaId) => {
                 setSelectedPersona(personaId);
                 setCurrentStep("categories");
@@ -110,6 +109,7 @@ export default function OnboardingPage() {
 
           {currentStep === "categories" && (
             <CategoryStep
+              key="categories"
               selectedCategories={selectedCategories}
               onCategoriesChange={setSelectedCategories}
               onComplete={handleCategoriesComplete}
@@ -118,7 +118,8 @@ export default function OnboardingPage() {
 
           {currentStep === "complete" && (
             <CompletionStep
-              userName={accountData.name}
+              key="complete"
+              userName={accountData.name || accountData.businessName || ''}
               selectedPersona={selectedPersona}
               selectedCategories={selectedCategories}
             />

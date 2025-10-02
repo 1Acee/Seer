@@ -1,8 +1,8 @@
-// File: app/page.tsx
+// app/page.tsx - Updated Landing Page with Correct Dashboard Preview
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   TrendingUp, 
@@ -16,14 +16,14 @@ import {
   Menu,
   X,
   Play,
-  Star
+  Star,
+  Search
 } from "lucide-react";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.98]);
-  const headerBlur = useTransform(scrollY, [0, 100], [0, 10]);
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -120,7 +120,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6"
             >
-              Surface Tomorrow's<br />
+              Surface Tomorrow&apos;s<br />
               <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
                 Trends Today
               </span>
@@ -152,7 +152,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Hero Image/Dashboard Preview */}
+          {/* Updated Dashboard Preview */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,50 +160,195 @@ export default function Home() {
             className="mt-20"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-indigo-600/20 blur-3xl" />
-              <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
-                <div className="bg-gray-900 p-4 flex items-center gap-2">
-                  <div className="flex gap-2">
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600/10 to-indigo-600/10 blur-3xl" />
+              <div className="relative bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden">
+                {/* Browser Chrome */}
+                <div className="bg-stone-900 p-3 flex items-center gap-2">
+                  <div className="flex gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-500" />
                     <div className="w-3 h-3 rounded-full bg-yellow-500" />
                     <div className="w-3 h-3 rounded-full bg-green-500" />
                   </div>
-                  <div className="flex-1 text-center text-gray-400 text-sm">seer.app/dashboard</div>
+                  <div className="flex-1 text-center text-stone-400 text-sm">seer.app/dashboard</div>
                 </div>
-                <div className="p-8 bg-gradient-to-br from-gray-50 to-white">
-                  {/* Mock Dashboard */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white p-6 rounded-xl border border-gray-200">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm text-gray-500">Emerging Trend</span>
-                        <span className="text-2xl font-bold text-violet-600">92</span>
-                      </div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Glass Skin Aesthetic</h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Low Saturation</span>
-                        <span className="text-xs text-gray-500">~7 days to peak</span>
-                      </div>
-                    </div>
-                    <div className="bg-white p-6 rounded-xl border border-gray-200">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm text-gray-500">Trending Now</span>
-                        <span className="text-2xl font-bold text-indigo-600">88</span>
-                      </div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Micro-HIIT Workouts</h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Medium Saturation</span>
-                        <span className="text-xs text-gray-500">+45% velocity</span>
+                
+                {/* Dashboard Content - Matching actual dashboard */}
+                <div className="bg-gradient-to-br from-stone-50 via-stone-50 to-amber-50/20 p-6">
+                  {/* Top Nav Bar */}
+                  <div className="flex items-center justify-between mb-6 bg-white/80 backdrop-blur-sm rounded-2xl p-3 border border-stone-200/50">
+                    <div className="flex items-center gap-4">
+                      <span className="text-2xl font-light text-stone-900" style={{ fontFamily: "'Playfair Display', serif" }}>Seer</span>
+                      <div className="flex-1 max-w-md relative">
+                        <input 
+                          type="text" 
+                          placeholder="Search trends, insights, signals..."
+                          className="w-full pl-10 pr-4 py-2 bg-stone-50 rounded-xl text-sm border border-stone-200"
+                          disabled
+                        />
+                        <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5" />
                       </div>
                     </div>
-                    <div className="bg-white p-6 rounded-xl border border-gray-200">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm text-gray-500">Watch List</span>
-                        <span className="text-2xl font-bold text-purple-600">95</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-stone-600 flex items-center gap-1">
+                        <span className="text-violet-600">◉</span> 12 watching
+                      </span>
+                      <span className="text-sm text-stone-600">6 trending</span>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-400" />
+                    </div>
+                  </div>
+
+                  {/* Main Content Area */}
+                  <div className="flex gap-6">
+                    {/* Sidebar */}
+                    <div className="w-48 space-y-1">
+                      <div className="bg-white/60 rounded-xl p-2 border border-violet-200">
+                        <span className="text-sm text-stone-700 flex items-center gap-2">
+                          <span className="text-violet-600">◈</span> Dashboard
+                        </span>
                       </div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Silent Luxury</h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">High Novelty</span>
-                        <span className="text-xs text-gray-500">Cross-platform</span>
+                      <div className="p-2">
+                        <span className="text-sm text-stone-600 flex items-center gap-2">
+                          <span className="text-stone-400">◇</span> All Trends
+                        </span>
+                      </div>
+                      <div className="p-2">
+                        <span className="text-sm text-stone-600 flex items-center gap-2">
+                          <span className="text-stone-400">◉</span> Watchlist
+                        </span>
+                      </div>
+                      <div className="p-2">
+                        <span className="text-sm text-stone-600 flex items-center gap-2">
+                          <span className="text-stone-400">◐</span> Calendar
+                        </span>
+                      </div>
+                      <div className="p-2">
+                        <span className="text-sm text-stone-600 flex items-center gap-2">
+                          <span className="text-stone-400">▲</span> Optimizer
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Main Dashboard */}
+                    <div className="flex-1">
+                      {/* Welcome Section */}
+                      <div className="mb-6">
+                        <h1 className="text-4xl font-extralight mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+                          Intelligence <em>unfolds</em>
+                        </h1>
+                        <p className="text-stone-600">Welcome back, Kajal. Today&apos;s emerging patterns across your domains</p>
+                      </div>
+
+                      {/* Stats Bar */}
+                      <div className="grid grid-cols-4 gap-4 mb-6">
+                        <div className="bg-white/80 rounded-xl p-4 border border-stone-200/50">
+                          <div className="text-2xl font-semibold text-stone-900">247</div>
+                          <div className="text-xs text-stone-500 uppercase tracking-wide">Active Signals</div>
+                          <div className="text-xs text-violet-600">+12%</div>
+                        </div>
+                        <div className="bg-white/80 rounded-xl p-4 border border-stone-200/50">
+                          <div className="text-2xl font-semibold text-stone-900">18</div>
+                          <div className="text-xs text-stone-500 uppercase tracking-wide">Trending Now</div>
+                          <div className="text-xs text-violet-600">+3</div>
+                        </div>
+                        <div className="bg-white/80 rounded-xl p-4 border border-stone-200/50">
+                          <div className="text-2xl font-semibold text-stone-900">6</div>
+                          <div className="text-xs text-stone-500 uppercase tracking-wide">Peak Predictions</div>
+                          <div className="text-xs text-violet-600">This week</div>
+                        </div>
+                        <div className="bg-white/80 rounded-xl p-4 border border-stone-200/50">
+                          <div className="text-2xl font-semibold text-stone-900">94%</div>
+                          <div className="text-xs text-stone-500 uppercase tracking-wide">Success Rate</div>
+                          <div className="text-xs text-violet-600">↑ 2%</div>
+                        </div>
+                      </div>
+
+                      {/* Emerging Trends Section */}
+                      <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-light">Emerging Trends</h2>
+                        <span className="text-sm text-stone-500">VIEW ALL →</span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 mb-6">
+                        {/* Trend Card 1 */}
+                        <div className="bg-white/90 rounded-2xl p-5 border border-stone-200/50 hover:shadow-lg transition-shadow">
+                          <div className="flex justify-between items-start mb-3">
+                            <div>
+                              <h3 className="font-medium text-stone-900 text-lg">Quiet Luxury Aesthetic</h3>
+                              <span className="text-xs text-stone-500 uppercase">Fashion</span>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-2xl font-semibold text-violet-600">88</div>
+                              <div className="text-xs text-stone-500">SCORE</div>
+                            </div>
+                          </div>
+                          
+                          {/* Mini Chart */}
+                          <div className="h-16 flex items-end gap-1 mb-3">
+                            <div className="w-3 bg-violet-200 rounded-t" style={{ height: "40%" }}></div>
+                            <div className="w-3 bg-violet-300 rounded-t" style={{ height: "50%" }}></div>
+                            <div className="w-3 bg-violet-400 rounded-t" style={{ height: "60%" }}></div>
+                            <div className="w-3 bg-violet-500 rounded-t" style={{ height: "75%" }}></div>
+                            <div className="w-3 bg-violet-600 rounded-t" style={{ height: "90%" }}></div>
+                            <div className="w-3 bg-gradient-to-t from-violet-600 to-purple-500 rounded-t border-2 border-white" style={{ height: "100%" }}></div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Low Saturation</span>
+                            <span className="text-stone-500">~8 days to peak</span>
+                          </div>
+                        </div>
+
+                        {/* Trend Card 2 */}
+                        <div className="bg-white/90 rounded-2xl p-5 border border-stone-200/50 hover:shadow-lg transition-shadow">
+                          <div className="flex justify-between items-start mb-3">
+                            <div>
+                              <h3 className="font-medium text-stone-900 text-lg">Dopamine Decor</h3>
+                              <span className="text-xs text-stone-500 uppercase">Lifestyle</span>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-2xl font-semibold text-violet-600">92</div>
+                              <div className="text-xs text-stone-500">SCORE</div>
+                            </div>
+                          </div>
+                          
+                          {/* Mini Chart */}
+                          <div className="h-16 flex items-end gap-1 mb-3">
+                            <div className="w-3 bg-violet-200 rounded-t" style={{ height: "30%" }}></div>
+                            <div className="w-3 bg-violet-300 rounded-t" style={{ height: "45%" }}></div>
+                            <div className="w-3 bg-violet-400 rounded-t" style={{ height: "65%" }}></div>
+                            <div className="w-3 bg-violet-500 rounded-t" style={{ height: "85%" }}></div>
+                            <div className="w-3 bg-violet-600 rounded-t" style={{ height: "95%" }}></div>
+                            <div className="w-3 bg-gradient-to-t from-violet-600 to-purple-500 rounded-t border-2 border-white" style={{ height: "100%" }}></div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">High Novelty</span>
+                            <span className="text-stone-500">+12.5% heating</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Watchlist Section */}
+                      <div className="bg-white/60 rounded-xl p-4 border border-stone-200/50">
+                        <div className="flex justify-between items-center mb-3">
+                          <h3 className="font-medium text-stone-900">Watchlist</h3>
+                          <div className="flex gap-2 text-xs">
+                            <span className="px-2 py-1 bg-stone-100 text-stone-600 rounded-lg">ALL</span>
+                            <span className="px-2 py-1 text-stone-500">HEATING</span>
+                            <span className="px-2 py-1 text-stone-500">STABLE</span>
+                            <span className="px-2 py-1 text-stone-500">COOLING</span>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center py-2 border-b border-stone-100">
+                            <span className="text-sm text-stone-700">Dopamine Decor</span>
+                            <span className="text-xs text-green-600">+12.5% heating</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2">
+                            <span className="text-sm text-stone-700">Silent Luxury</span>
+                            <span className="text-xs text-stone-500">147 signals</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -387,7 +532,7 @@ export default function Home() {
               Simple, transparent pricing
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose the plan that fits your needs. Always know what you'll pay.
+              Choose the plan that fits your needs. Always know what you&apos;ll pay.
             </p>
           </div>
 
@@ -511,7 +656,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-600 mb-4">
-                "Seer helped me identify the glass skin trend 2 weeks before it exploded. My content got 10x the usual engagement!"
+                &quot;Seer helped me identify the glass skin trend 2 weeks before it exploded. My content got 10x the usual engagement!&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-violet-400 to-pink-400 rounded-full" />
@@ -529,7 +674,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-600 mb-4">
-                "The swipe mode is addictive! I check it every morning with my coffee. It's like Tinder for trends."
+                &quot;The swipe mode is addictive! I check it every morning with my coffee. It&apos;s like Tinder for trends.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-green-400 rounded-full" />
@@ -547,7 +692,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-600 mb-4">
-                "As an agency, Seer gives us the edge. We pitch trends to clients before competitors even know they exist."
+                &quot;As an agency, Seer gives us the edge. We pitch trends to clients before competitors even know they exist.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-red-400 rounded-full" />
@@ -568,7 +713,7 @@ export default function Home() {
             Ready to predict the future?
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Join thousands of creators who are already surfing tomorrow's trends today.
+            Join thousands of creators who are already surfing tomorrow&apos;s trends today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/onboarding" className="px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-lg hover:from-violet-700 hover:to-indigo-700 transition-all font-medium text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
@@ -593,7 +738,7 @@ export default function Home() {
                 <span className="text-xl font-semibold text-white">Seer</span>
               </div>
               <p className="text-sm">
-                Surface tomorrow's trends today with AI-powered intelligence.
+                Surface tomorrow&apos;s trends today with AI-powered intelligence.
               </p>
             </div>
 

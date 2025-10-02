@@ -1,45 +1,74 @@
-// File: components/onboarding/PersonaStep.tsx
+// components/onboarding/PersonaStep.tsx
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Circle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 const PERSONAS = [
   {
     id: "content-creator",
     title: "Content Creator",
-    description: "TikTok, Reels, YouTube Shorts creator looking for viral trends",
-    symbol: "◯",
-    features: ["Viral content ideas", "Trend timing", "Platform optimization"]
+    subtitle: "TikTok • Reels • YouTube",
+    description: "Track viral trends and optimize content timing",
+    icon: "◉",
+    accent: "violet",
+    details: [
+      "Viral content predictions",
+      "Hashtag optimization", 
+      "Best posting times"
+    ]
   },
   {
     id: "marketing-agency", 
     title: "Marketing Agency",
-    description: "Full-service agency managing multiple client campaigns",
-    symbol: "◢",
-    features: ["Client reporting", "Campaign insights", "Market analysis"]
+    subtitle: "Multi-client campaigns",
+    description: "Monitor market shifts and campaign performance",
+    icon: "◈",
+    accent: "indigo",
+    details: [
+      "Campaign analytics",
+      "Competitor tracking",
+      "Client reporting tools"
+    ]
   },
   {
     id: "pr-specialist",
     title: "PR Specialist", 
-    description: "Public relations professional tracking brand sentiment",
-    symbol: "◆",
-    features: ["Brand monitoring", "Crisis prevention", "Media opportunities"]
+    subtitle: "Brand reputation",
+    description: "Track sentiment and media opportunities",
+    icon: "◆",
+    accent: "blue",
+    details: [
+      "Crisis detection",
+      "Media monitoring",
+      "Sentiment analysis"
+    ]
   },
   {
     id: "talent-manager",
     title: "Talent Manager",
-    description: "Agent representing creators and managing their growth",
-    symbol: "◈",
-    features: ["Talent positioning", "Growth strategies", "Market opportunities"]
+    subtitle: "Creator representation",
+    description: "Identify growth opportunities for clients",
+    icon: "◊",
+    accent: "purple",
+    details: [
+      "Talent positioning",
+      "Growth strategies",
+      "Brand partnerships"
+    ]
   },
   {
     id: "entrepreneur",
     title: "Entrepreneur",
-    description: "Founder building products and identifying market opportunities",
-    symbol: "△",
-    features: ["Market validation", "Product opportunities", "Competitive analysis"]
+    subtitle: "Product innovation",
+    description: "Discover market gaps and validate ideas",
+    icon: "△",
+    accent: "fuchsia",
+    details: [
+      "Market validation",
+      "Trend forecasting",
+      "Opportunity scoring"
+    ]
   }
 ];
 
@@ -53,218 +82,202 @@ export default function PersonaStep({ onPersonaSelect }: PersonaStepProps) {
 
   const handlePersonaClick = (personaId: string) => {
     setSelectedPersona(personaId);
-    setTimeout(() => onPersonaSelect(personaId), 1000);
+    setTimeout(() => onPersonaSelect(personaId), 600);
+  };
+
+  const getAccentColor = (accent: string, type: 'bg' | 'border' | 'text' | 'light') => {
+    const colors = {
+      violet: {
+        bg: 'bg-violet-50',
+        border: 'border-violet-200',
+        text: 'text-violet-600',
+        light: 'bg-violet-100'
+      },
+      indigo: {
+        bg: 'bg-indigo-50',
+        border: 'border-indigo-200',
+        text: 'text-indigo-600',
+        light: 'bg-indigo-100'
+      },
+      blue: {
+        bg: 'bg-blue-50',
+        border: 'border-blue-200',
+        text: 'text-blue-600',
+        light: 'bg-blue-100'
+      },
+      purple: {
+        bg: 'bg-purple-50',
+        border: 'border-purple-200',
+        text: 'text-purple-600',
+        light: 'bg-purple-100'
+      },
+      fuchsia: {
+        bg: 'bg-fuchsia-50',
+        border: 'border-fuchsia-200',
+        text: 'text-fuchsia-600',
+        light: 'bg-fuchsia-100'
+      }
+    };
+    return colors[accent as keyof typeof colors][type];
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-75 to-stone-100 flex items-center justify-center p-12">
-      <div className="w-full max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-[#f5f1ed] via-[#ede8e3] to-[#e8e2db] pt-28 pb-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-20"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <h1 className="text-7xl md:text-8xl font-extralight text-stone-900 mb-6 tracking-tight leading-none">
-            Who are <span className="font-light italic">you</span>?
+          <h1 className="text-4xl md:text-5xl font-extralight text-stone-800 mb-4">
+            Select your role
           </h1>
-          <p className="text-xl text-stone-500 max-w-3xl mx-auto leading-relaxed font-light">
-            Choose your creative identity to receive intelligence patterns 
-            <br />designed for your unique workflow
+          <p className="text-stone-600 font-light max-w-2xl mx-auto">
+            Choose the profile that best describes your work. This helps us customize your experience.
           </p>
-          
-          {/* Minimal progress */}
-          <div className="flex items-center justify-center mt-12">
-            <div className="flex space-x-3">
-              <div className="w-2 h-2 bg-stone-400 rounded-full opacity-60"></div>
-              <div className="w-12 h-2 bg-stone-900 rounded-full"></div>
-              <div className="w-2 h-2 bg-stone-300 rounded-full opacity-40"></div>
-            </div>
-          </div>
         </motion.div>
 
-        {/* Persona Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        {/* Persona Grid - Larger cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 max-w-7xl mx-auto">
           {PERSONAS.map((persona, index) => {
             const isSelected = selectedPersona === persona.id;
             const isHovered = hoveredPersona === persona.id;
             
             return (
-              <motion.div
+              <motion.button
                 key={persona.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ 
-                  delay: index * 0.15, 
-                  duration: 0.7,
-                  ease: [0.25, 0.46, 0.45, 0.94]
+                  delay: index * 0.08, 
+                  duration: 0.5,
+                  type: "spring",
+                  stiffness: 100
                 }}
-                className="group cursor-pointer"
+                whileHover={{ 
+                  y: -6,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => handlePersonaClick(persona.id)}
                 onMouseEnter={() => setHoveredPersona(persona.id)}
                 onMouseLeave={() => setHoveredPersona(null)}
-                onClick={() => handlePersonaClick(persona.id)}
+                className="relative group text-left"
               >
                 <motion.div
-                  whileHover={{ y: -12, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className={`relative h-96 rounded-3xl transition-all duration-500 overflow-hidden ${
-                    isSelected 
-                      ? 'bg-white shadow-2xl ring-1 ring-stone-900/10' 
-                      : isHovered 
-                      ? 'bg-white shadow-xl' 
-                      : 'bg-stone-50/50 backdrop-blur-sm shadow-lg hover:shadow-xl'
-                  }`}
-                  style={{
-                    background: isSelected 
-                      ? 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(250,248,246,0.9))' 
-                      : undefined
-                  }}
+                  layoutId={`persona-card-${persona.id}`}
+                  className={`
+                    relative h-full p-7 rounded-2xl transition-all duration-300 overflow-hidden
+                    ${isSelected 
+                      ? `${getAccentColor(persona.accent, 'light')} ${getAccentColor(persona.accent, 'border')} border-2 shadow-xl` 
+                      : 'bg-white border border-stone-200 hover:border-stone-300 hover:shadow-lg'
+                    }
+                  `}
                 >
-                  
-                  {/* Subtle neon accent line */}
-                  {(isSelected || isHovered) && (
-                    <motion.div
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      className="absolute inset-0"
-    style={{ background: 'linear-gradient(to bottom, rgba(var(--accent-rgb), 0.05), transparent)' }}
-                    />
-                  )}
-                  
+                  {/* Animated background gradient on hover */}
+                  <motion.div
+                    className={`absolute inset-0 ${getAccentColor(persona.accent, 'bg')} opacity-0`}
+                    animate={{ opacity: isHovered ? 0.3 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+
+                  {/* Icon with animation */}
+                  <motion.div 
+                    className={`
+                      relative text-3xl mb-5 transition-colors duration-300
+                      ${isSelected ? getAccentColor(persona.accent, 'text') : 'text-stone-400'}
+                    `}
+                    animate={{ 
+                      rotate: isSelected ? 360 : 0,
+                      scale: isHovered ? 1.1 : 1
+                    }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {persona.icon}
+                  </motion.div>
+
                   {/* Content */}
-                  <div className="relative p-8 h-full flex flex-col">
+                  <div className="relative space-y-3">
+                    <h3 className={`font-medium text-lg transition-colors ${
+                      isSelected ? 'text-stone-900' : 'text-stone-700'
+                    }`}>
+                      {persona.title}
+                    </h3>
                     
-                    {/* Symbol */}
-                    <div className="flex items-center justify-between mb-8">
-                      <motion.div 
-                        className={`text-4xl font-light transition-all duration-300 ${
-                          isSelected 
-                            ? 'text-stone-900 scale-110' 
-                            : 'text-stone-400 group-hover:text-stone-600'
-                        }`}
-                        animate={isSelected ? { rotate: 360 } : { rotate: 0 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        {persona.symbol}
-                      </motion.div>
-                      
-                      {/* Selection indicator */}
-                      <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ 
-                          scale: isSelected ? 1 : 0,
-                          opacity: isSelected ? 1 : 0
-                        }}
-                        transition={{ duration: 0.3 }}
-                        className="w-6 h-6 bg-lime-400 rounded-full flex items-center justify-center"
-                      >
-                        <div className="w-2 h-2 bg-stone-900 rounded-full"></div>
-                      </motion.div>
-                    </div>
+                    <p className={`text-xs font-light transition-colors ${
+                      isSelected ? 'text-stone-700' : 'text-stone-500'
+                    }`}>
+                      {persona.subtitle}
+                    </p>
+                    
+                    <p className={`text-sm leading-relaxed transition-colors ${
+                      isSelected ? 'text-stone-700' : 'text-stone-600'
+                    }`}>
+                      {persona.description}
+                    </p>
 
-                    {/* Title and description */}
-                    <div className="flex-grow">
-                      <h3 className={`text-2xl font-light mb-4 transition-colors duration-300 ${
-                        isSelected ? 'text-stone-900' : 'text-stone-700'
-                      }`}>
-                        {persona.title}
-                      </h3>
-                      <p className="text-stone-500 leading-relaxed mb-8 font-light text-sm">
-                        {persona.description}
-                      </p>
-                    </div>
-
-                    {/* Features - only show on hover or selection */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ 
-                        opacity: isHovered || isSelected ? 1 : 0,
-                        y: isHovered || isSelected ? 0 : 20
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-3"
-                    >
-                      {persona.features.map((feature, idx) => (
+                    {/* Details on hover - simple fade in */}
+                    <AnimatePresence>
+                      {(isHovered || isSelected) && (
                         <motion.div
-                          key={idx}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ 
-                            opacity: isHovered || isSelected ? 1 : 0,
-                            x: isHovered || isSelected ? 0 : -10
-                          }}
-                          transition={{ delay: idx * 0.1, duration: 0.3 }}
-                          className="flex items-center text-xs text-stone-400 font-light"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="pt-3 border-t border-stone-200"
                         >
-                          <div className="w-1 h-1 bg-stone-300 rounded-full mr-3" />
-                          {feature}
+                          <div className="space-y-1">
+                            {persona.details.map((detail, idx) => (
+                              <motion.div
+                                key={idx}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: idx * 0.05 }}
+                                className="flex items-center gap-2 text-xs text-stone-600"
+                              >
+                                <span className={`w-1 h-1 rounded-full ${getAccentColor(persona.accent, 'bg')}`} />
+                                {detail}
+                              </motion.div>
+                            ))}
+                          </div>
                         </motion.div>
-                      ))}
-                    </motion.div>
-
-                    {/* Call to action overlay */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ 
-                        opacity: isHovered && !isSelected ? 1 : 0,
-                        y: isHovered && !isSelected ? 0 : 20
-                      }}
-                      className="absolute bottom-6 left-8 right-8"
-                    >
-                      <div className="bg-stone-900/90 backdrop-blur-sm text-white text-center py-3 rounded-2xl text-sm font-light">
-                        Select this identity
-                      </div>
-                    </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
-                  {/* Selection state overlay */}
-                  {isSelected && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="absolute inset-0"
-    style={{ background: 'linear-gradient(to bottom, rgba(var(--accent-rgb), 0.05), transparent)' }} 
-                    >
+                  {/* Selection indicator - animated */}
+                  <AnimatePresence>
+                    {isSelected && (
                       <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white rounded-full p-4 shadow-xl"
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0, rotate: 180 }}
+                        className={`absolute -top-2 -right-2 w-7 h-7 ${getAccentColor(persona.accent, 'light')} ${getAccentColor(persona.accent, 'border')} border-2 rounded-full flex items-center justify-center`}
                       >
-                        <ArrowRight className="w-6 h-6 text-stone-900" />
+                        <svg className={`w-4 h-4 ${getAccentColor(persona.accent, 'text')}`} fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
                       </motion.div>
-                    </motion.div>
-                  )}
+                    )}
+                  </AnimatePresence>
                 </motion.div>
-              </motion.div>
+              </motion.button>
             );
           })}
         </div>
 
-        {/* Ambient elements */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-px h-px bg-stone-300 rounded-full"
-              style={{
-                left: `${15 + i * 10}%`,
-                top: `${25 + (i % 3) * 20}%`,
-              }}
-              animate={{
-                scale: [1, 3, 1],
-                opacity: [0.2, 0.6, 0.2],
-              }}
-              transition={{
-                duration: 4 + i * 0.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </div>
+        {/* Helper text */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="text-center text-sm text-stone-500 mt-10 font-light"
+        >
+          You can change this later in settings
+        </motion.p>
       </div>
     </div>
   );
