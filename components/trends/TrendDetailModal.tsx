@@ -22,6 +22,15 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
     };
   }, []);
 
+  // Close on Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
   // Generate extended chart data
   const generateChartData = () => {
     const days = chartTimeframe === '7d' ? 7 : chartTimeframe === '14d' ? 14 : 30;
@@ -53,18 +62,18 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
+        exit={{ scale: 0.95, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="w-full max-w-6xl max-h-[90vh] bg-card rounded-3xl shadow-2xl overflow-hidden"
+        className="w-full max-w-6xl max-h-[90vh] bg-card rounded-3xl shadow-2xl overflow-hidden border border-border"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="px-8 py-6 border-b border-border">
           <div className="flex items-start justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2 flex-wrap">
                 <span className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm">
                   {trend.category}
                 </span>
@@ -93,12 +102,12 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
                 {trend.description}
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 ml-6">
               <button
                 onClick={() => setIsFollowing(!isFollowing)}
                 className={`px-5 py-2 rounded-full transition-all ${
                   isFollowing 
-                    ? 'bg-accent text-accent-foreground hover:bg-accent/80' 
+                    ? 'bg-[var(--accent-color)] text-white hover:opacity-80' 
                     : 'bg-secondary text-secondary-foreground hover:bg-muted'
                 }`}
               >
@@ -108,7 +117,9 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
                 onClick={onClose}
                 className="p-2 hover:bg-secondary rounded-full transition-colors"
               >
-                <span className="text-xl text-muted-foreground">✕</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-muted-foreground">
+                  <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
               </button>
             </div>
           </div>
@@ -123,7 +134,7 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
               className={`relative pb-2 text-sm transition-colors ${
                 activeTab === tab 
                   ? 'text-foreground' 
-                  : 'text-muted-foreground dark:text-muted-foreground hover:text-stone-700 dark:hover:text-stone-300'
+                  : 'text-muted-foreground hover:text-secondary-foreground'
               }`}
             >
               {tab === 'overview' && 'Overview'}
@@ -134,6 +145,7 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
                 <motion.div 
                   layoutId="activeTab"
                   className="absolute -bottom-2 left-0 right-0 h-0.5 bg-[var(--accent-color)]"
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
               )}
             </button>
@@ -141,30 +153,30 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
         </div>
 
         {/* Content */}
-        <div className="p-8 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 200px)' }}>
+        <div className="p-8 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 240px)' }}>
           {activeTab === 'overview' && (
             <div className="space-y-8">
               {/* Key Metrics */}
               <div className="grid grid-cols-4 gap-6">
-                <div className="p-6 bg-background rounded-2xl">
+                <div className="p-6 bg-background rounded-2xl border border-border transition-all hover:border-[var(--accent-color)]/20">
                   <div className="text-3xl font-extralight text-foreground mb-1">
                     {trend.seerScore}
                   </div>
                   <div className="text-sm text-muted-foreground">Seer Score</div>
                 </div>
-                <div className="p-6 bg-background rounded-2xl">
+                <div className="p-6 bg-background rounded-2xl border border-border transition-all hover:border-[var(--accent-color)]/20">
                   <div className="text-3xl font-extralight text-foreground mb-1">
                     {trend.leadTime}
                   </div>
                   <div className="text-sm text-muted-foreground">Days to Peak</div>
                 </div>
-                <div className="p-6 bg-background rounded-2xl">
-                  <div className="text-3xl font-extralight text-foreground mb-1">
+                <div className="p-6 bg-background rounded-2xl border border-border transition-all hover:border-[var(--accent-color)]/20">
+                  <div className="text-3xl font-extralight text-[var(--accent-color)] mb-1">
                     +{trend.velocity}%
                   </div>
                   <div className="text-sm text-muted-foreground">Velocity</div>
                 </div>
-                <div className="p-6 bg-background rounded-2xl">
+                <div className="p-6 bg-background rounded-2xl border border-border transition-all hover:border-[var(--accent-color)]/20">
                   <div className="text-3xl font-extralight text-foreground mb-1">
                     {trend.confidence}%
                   </div>
@@ -173,7 +185,7 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
               </div>
 
               {/* Chart */}
-              <div className="bg-background rounded-2xl p-6">
+              <div className="bg-background rounded-2xl p-6 border border-border">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-lg font-light text-foreground">
                     Momentum & Prediction
@@ -296,20 +308,20 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
 
           {activeTab === 'evidence' && (
             <div className="space-y-6">
-              <h3 className="text-lg font-light text-foreground">
+              <h3 className="text-lg font-light text-foreground mb-4">
                 Evidence Sources
               </h3>
               {Object.entries(trend.evidence).map(([platform, count]) => (
-                <div key={platform} className="flex items-center justify-between p-4 bg-background rounded-2xl">
+                <div key={platform} className="flex items-center justify-between p-4 bg-background rounded-2xl border border-border transition-all hover:border-[var(--accent-color)]/20">
                   <div className="flex items-center gap-4">
-                    <div className="text-2xl">
+                    <div className="text-2xl text-muted-foreground">
                       {platform === 'reddit' ? '◉' : 
                        platform === 'tiktok' ? '◈' :
                        platform === 'youtube' ? '▶' :
                        platform === 'twitter' ? '◎' : '◐'}
                     </div>
                     <div>
-                      <div className="text-foreground capitalize">{platform}</div>
+                      <div className="text-foreground capitalize font-light">{platform}</div>
                       <div className="text-sm text-muted-foreground">{count} mentions</div>
                     </div>
                   </div>
@@ -324,25 +336,55 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
           {activeTab === 'actions' && (
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-6 bg-background rounded-2xl">
+                <div className="p-6 bg-background rounded-2xl border border-border">
                   <h4 className="text-lg font-light text-foreground mb-4">
                     Content Ideas
                   </h4>
                   <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Tutorial showcasing the trend</li>
-                    <li>• "Day in the life" featuring this trend</li>
-                    <li>• Comparison with similar trends</li>
-                    <li>• Behind-the-scenes creation process</li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[var(--accent-color)] mt-0.5">◉</span>
+                      <span>Tutorial showcasing the trend</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[var(--accent-color)] mt-0.5">◉</span>
+                      <span>"Day in the life" featuring this trend</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[var(--accent-color)] mt-0.5">◉</span>
+                      <span>Comparison with similar trends</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[var(--accent-color)] mt-0.5">◉</span>
+                      <span>Behind-the-scenes creation process</span>
+                    </li>
                   </ul>
                 </div>
-                <div className="p-6 bg-background rounded-2xl">
+                <div className="p-6 bg-background rounded-2xl border border-border">
                   <h4 className="text-lg font-light text-foreground mb-4">
                     Best Times to Post
                   </h4>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div>Weekdays: 6-9 AM, 12-2 PM</div>
-                    <div>Weekends: 11 AM - 1 PM</div>
-                    <div>Peak engagement: Tuesday & Thursday</div>
+                  <div className="space-y-3 text-sm text-muted-foreground">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[var(--accent-color)] mt-0.5">◉</span>
+                      <div>
+                        <div className="font-medium text-foreground">Weekdays</div>
+                        <div>6-9 AM, 12-2 PM</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[var(--accent-color)] mt-0.5">◉</span>
+                      <div>
+                        <div className="font-medium text-foreground">Weekends</div>
+                        <div>11 AM - 1 PM</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[var(--accent-color)] mt-0.5">◉</span>
+                      <div>
+                        <div className="font-medium text-foreground">Peak days</div>
+                        <div>Tuesday & Thursday</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -350,14 +392,14 @@ export default function TrendDetailModal({ trend, onClose }: TrendDetailModalPro
           )}
 
           {activeTab === 'ai-insights' && (
-            <div className="p-6 bg-background rounded-2xl">
-              <div className="text-center py-12">
-                <div className="text-4xl mb-4 opacity-20">◎</div>
-                <p className="text-muted-foreground">
-                  AI Chat integration coming soon
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Ask questions about this trend and get personalized insights
+            <div className="p-12 bg-background rounded-2xl border border-border">
+              <div className="text-center">
+                <div className="text-6xl mb-6 opacity-10">◎</div>
+                <h3 className="text-xl font-light text-foreground mb-2">
+                  AI Chat Coming Soon
+                </h3>
+                <p className="text-muted-foreground max-w-md mx-auto">
+                  Ask questions about this trend and get personalized insights powered by AI
                 </p>
               </div>
             </div>

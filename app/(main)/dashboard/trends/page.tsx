@@ -6,6 +6,7 @@ import TrendsGrid from '@/components/trends/TrendsGrid';
 import TrendsFilters from '@/components/trends/TrendsFilters';
 import ViewToggle from '@/components/trends/ViewToggle';
 import SwipeMode from '@/components/trends/SwipeMode';
+import TrendDetailModal from '@/components/trends/TrendDetailModal';
 import { mockTrends, TrendData } from '@/utils/mockTrendsData';
 
 export default function TrendsPage() {
@@ -181,7 +182,7 @@ export default function TrendsPage() {
         <div className="w-80 border-r border-border bg-card">
           <TrendsFilters
             selectedCategories={selectedCategories}
-            availableCategories={userCategories} // Pass user's categories
+            availableCategories={userCategories}
             onCategoryToggle={handleCategoryToggle}
             saturationFilter={saturationFilter}
             setSaturationFilter={setSaturationFilter}
@@ -216,47 +217,12 @@ export default function TrendsPage() {
         </div>
       </div>
 
-      {/* Modal for selected trend */}
+      {/* TrendDetailModal */}
       {selectedTrend && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-          onClick={() => setSelectedTrend(null)}
-        >
-          <div 
-            className="bg-card rounded-3xl p-8 max-w-2xl w-full border border-border"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-2xl font-light text-foreground mb-4">
-              {selectedTrend.name}
-            </h2>
-            <p className="text-muted-foreground mb-4">
-              {selectedTrend.description}
-            </p>
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div>
-                <div className="text-2xl font-light text-foreground">{selectedTrend.seerScore}</div>
-                <div className="text-sm text-muted-foreground">Seer Score</div>
-              </div>
-              <div>
-                <div className="text-2xl font-light text-foreground">{selectedTrend.leadTime} days</div>
-                <div className="text-sm text-muted-foreground">To Peak</div>
-              </div>
-              <div>
-                <div className="text-2xl font-light" style={{ color: 'var(--accent-color)' }}>
-                  +{selectedTrend.velocity}%
-                </div>
-                <div className="text-sm text-muted-foreground">Velocity</div>
-              </div>
-            </div>
-            <button
-              onClick={() => setSelectedTrend(null)}
-              className="w-full px-4 py-2 rounded-full hover:scale-105 transition-transform text-white"
-              style={{ backgroundColor: 'var(--accent-color)' }}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <TrendDetailModal 
+          trend={selectedTrend}
+          onClose={() => setSelectedTrend(null)}
+        />
       )}
     </div>
   );
