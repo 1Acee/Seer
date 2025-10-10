@@ -78,7 +78,10 @@ export default function TopNav() {
                 backgroundColor: showNotifications ? 'var(--secondary)' : 'transparent'
               }}
             >
-              <span className="text-xl text-muted-foreground">◔</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-muted-foreground">
+                <path d="M10 2C8.5 2 7.5 3 7.5 4.5V5C5.5 5.5 4 7.5 4 10v4l-2 2v1h16v-1l-2-2v-4c0-2.5-1.5-4.5-3.5-5v-.5C12.5 3 11.5 2 10 2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M8.5 17.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               <span 
                 className="absolute top-2 right-2 w-2 h-2 rounded-full" 
                 style={{ backgroundColor: 'var(--accent-color)' }}
@@ -139,9 +142,10 @@ export default function TopNav() {
               className="p-3 rounded-full transition-all bg-secondary/50"
               title="Settings"
             >
-              <span className="text-xl text-muted-foreground">
-                ⚙
-              </span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-muted-foreground">
+                <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M16.5 10c0 .5.2.9.5 1.2l.3.3a2 2 0 01-1.4 3.4h-.4c-.5 0-.9.2-1.2.5-.3.3-.5.7-.5 1.2v.4a2 2 0 01-3.4 1.4l-.3-.3c-.3-.3-.7-.5-1.2-.5-.4 0-.9.2-1.2.5l-.3.3a2 2 0 01-3.4-1.4v-.4c0-.5-.2-.9-.5-1.2-.3-.3-.7-.5-1.2-.5h-.4a2 2 0 01-1.4-3.4l.3-.3c.3-.3.5-.7.5-1.2 0-.4-.2-.9-.5-1.2l-.3-.3a2 2 0 011.4-3.4h.4c.5 0 .9-.2 1.2-.5.3-.3.5-.7.5-1.2v-.4a2 2 0 013.4-1.4l.3.3c.3.3.8.5 1.2.5.5 0 .9-.2 1.2-.5l.3-.3a2 2 0 013.4 1.4v.4c0 .5.2.9.5 1.2.3.3.7.5 1.2.5h.4a2 2 0 011.4 3.4l-.3.3c-.3.3-.5.7-.5 1.2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </motion.button>
           </Link>
 
@@ -152,9 +156,14 @@ export default function TopNav() {
             onClick={toggleDarkMode}
             className="p-3 rounded-full transition-all bg-secondary/50"
           >
-            <span className="text-xl text-muted-foreground">
-              {darkMode ? '☉' : '☽'}
-            </span>
+            {darkMode ? (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-muted-foreground">
+                <circle cx="10" cy="10" r="4" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M10 2v2M10 16v2M18 10h-2M4 10H2M15.66 4.34l-1.41 1.41M5.75 14.25l-1.41 1.41M15.66 15.66l-1.41-1.41M5.75 5.75L4.34 4.34" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            ) : (
+              <span className="text-xl text-muted-foreground">☽</span>
+            )}
           </motion.button>
         </div>
       </div>

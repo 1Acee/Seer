@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/wsl/**)",
+      "Bash(awk:*)",
+      "Bash(source:*)",
+      "Bash(python test_db_connection.py:*)",
+      "Bash(cd:*)",
+      "Bash(sudo apt:*)",
+      "Bash(sudo apt install:*)",
+      "Bash(python3:*)",
+      "Bash(./venv/Scripts/pip.exe uninstall:*)",
+      "Bash(./venv/Scripts/pip.exe install psycopg2-binary)",
+      "Bash(./venv/Scripts/alembic.exe init alembic)",
+      "Bash(curl:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

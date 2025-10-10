@@ -26,9 +26,9 @@ export default function Sidebar() {
       transition={{ duration: 0.6 }}
       className="fixed left-0 top-0 h-screen w-72 z-40 bg-background border-r border-border flex flex-col"
     >
-      <div className="flex-1 flex flex-col p-10">
+      <div className="flex flex-col p-10 h-full">
         {/* Logo */}
-        <div className="mb-16">
+        <div className="mb-8">
           <h2 className="text-4xl font-extralight tracking-wide text-foreground font-['Playfair_Display']">
             Seer
           </h2>
@@ -40,8 +40,8 @@ export default function Sidebar() {
           />
         </div>
 
-        {/* Navigation - Now with flex-1 to take available space */}
-        <nav className="flex-1 space-y-1">
+        {/* Navigation */}
+        <nav className="flex-1 space-y-1 mb-8">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href;
             const isHovered = hoveredItem === item.id;
@@ -96,8 +96,8 @@ export default function Sidebar() {
           })}
         </nav>
 
-        {/* User Profile Section - Now properly spaced with margin-top */}
-        <div className="mt-auto pt-8">
+        {/* User Profile Section */}
+        <div className="mt-auto">
           <div className="p-6 rounded-2xl bg-secondary/50 border border-border">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-10 h-10 rounded-full flex items-center justify-center bg-muted">
@@ -115,12 +115,14 @@ export default function Sidebar() {
             <div className="text-xs text-muted-foreground">
               <div>3 uploads remaining</div>
               <div className="mt-2">
-                <span 
-                  style={{ color: 'var(--accent-color)' }}
-                  className="cursor-pointer hover:opacity-80 transition-opacity"
-                >
-                  Upgrade to Elite →
-                </span>
+                <Link href="/dashboard/subscription">
+                  <span 
+                    style={{ color: 'var(--accent-color)' }}
+                    className="cursor-pointer hover:opacity-80 transition-opacity"
+                  >
+                    Upgrade to Elite →
+                  </span>
+                </Link>
               </div>
             </div>
           </div>

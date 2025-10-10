@@ -1,8 +1,34 @@
+// app/(main)/dashboard/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import TrendDetailModal from "@/components/trends/TrendDetailModal";
+import CategorySpotlight from "@/components/dashboard/CategorySpotlight";
+
+// Transform the existing trends data to match TrendData interface
+const transformTrendData = (trend: any) => ({
+  id: trend.id,
+  name: trend.name,
+  category: trend.category,
+  seerScore: trend.score,
+  leadTime: trend.leadTime,
+  momentum: trend.momentum,
+  velocity: trend.velocity,
+  saturation: trend.saturation < 30 ? 'Low' : trend.saturation < 60 ? 'Medium' : 'High',
+  novelty: trend.tags?.includes('High Novelty') ? 'High' : 'Medium',
+  confidence: 85 + Math.floor(Math.random() * 10),
+  crossPlatform: trend.tags?.includes('Cross-Platform'),
+  evidence: trend.signals || { reddit: 10, tiktok: 15, youtube: 8, twitter: 5 },
+  hashtags: [
+    `#${trend.name.replace(/\s+/g, '').toLowerCase()}`,
+    `#trending${trend.category.toLowerCase()}`,
+    `#${trend.category.toLowerCase()}trends`,
+    `#viral${trend.category.toLowerCase()}`
+  ],
+  description: trend.description
+});
 
 const trends = [
   {
@@ -94,13 +120,16 @@ const watchlistItems = [
 ];
 
 export default function DashboardPage() {
-  const [selectedTrend, setSelectedTrend] = useState<string | null>(null);
+  const [selectedTrend, setSelectedTrend] = useState<any>(null);
   const [watchlistTab, setWatchlistTab] = useState<'all' | 'heating' | 'stable' | 'cooling'>('all');
   const [userName, setUserName] = useState("");
+  const [userCategories, setUserCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData") || "{}");
     setUserName(userData.userName || "");
+    // Get user's selected categories from localStorage (set during onboarding)
+    setUserCategories(userData.categories || ['beauty', 'fashion', 'tech', 'fitness', 'lifestyle']);
   }, []);
 
   const filteredWatchlist = watchlistTab === 'all' 
@@ -164,9 +193,12 @@ export default function DashboardPage() {
               <h2 className="text-3xl font-extralight text-foreground">
                 Emerging Trends
               </h2>
-              <button className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
+              <Link 
+                href="/dashboard/trends"
+                className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+              >
                 View All →
-              </button>
+              </Link>
             </div>
 
             <div className="space-y-6">
@@ -177,7 +209,8 @@ export default function DashboardPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -4 }}
-                  className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 bg-card border border-border"
+                  className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 bg-card border border-border cursor-pointer"
+                  onClick={() => setSelectedTrend(transformTrendData(trend))}
                 >
                   <div className="p-8">
                     <div className="flex justify-between items-start mb-6">
@@ -239,12 +272,21 @@ export default function DashboardPage() {
 
                     {/* Action Buttons */}
                     <div className="flex justify-between items-center mt-6">
-                      <button className="text-xs uppercase tracking-wider hover:opacity-70 transition-opacity text-muted-foreground">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Add follow functionality here
+                        }}
+                        className="text-xs uppercase tracking-wider hover:opacity-70 transition-opacity text-muted-foreground"
+                      >
                         Follow Trend
                       </button>
                       
                       <button 
-                        onClick={() => window.location.href = `/trends/${trend.id}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedTrend(transformTrendData(trend));
+                        }}
                         className="px-6 py-2.5 rounded-full text-xs uppercase tracking-wider transition-all hover:scale-105 hover:shadow-lg text-white font-medium"
                         style={{ backgroundColor: 'var(--accent-color)' }}>
                         Expand →
@@ -256,7 +298,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Enhanced Watchlist Section - 1 column */}
+          {/* Enhanced Watchlist Section */}
           <div className="lg:col-span-1">
             <div className="rounded-2xl overflow-hidden shadow-lg bg-card border border-border">
               <div className="p-6 border-b border-border">
@@ -351,132 +393,24 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Category Spotlight Section - Full Width Below */}
+        {/* Category Spotlight Component - Replace inline implementation */}
         <div className="mt-16">
-          <div className="rounded-2xl overflow-hidden shadow-lg p-8 bg-card border border-border">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-3xl font-extralight text-foreground">
-                  Category Spotlight
-                </h2>
-                <p className="text-sm mt-2 text-muted-foreground">
-                  Top emerging trends by domain • Auto-rotating every 8 seconds
-                </p>
-              </div>
-              <button className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
-                Pause Rotation
-              </button>
-            </div>
-
-            {/* Category Tabs */}
-            <div className="flex gap-2 mb-8 flex-wrap">
-              {['Beauty', 'Fashion', 'Tech', 'Fitness', 'Lifestyle'].map((cat, i) => (
-                <button
-                  key={cat}
-                  className="px-4 py-2 rounded-full transition-all flex items-center gap-2"
-                  style={{
-                    backgroundColor: i === 0 ? 'var(--accent-color)' : 'var(--secondary)',
-                    color: i === 0 ? 'white' : 'var(--muted-foreground)'
-                  }}
-                >
-                  <span className="text-lg">
-                    {cat === 'Beauty' && '◐'}
-                    {cat === 'Fashion' && '◑'}
-                    {cat === 'Tech' && '◔'}
-                    {cat === 'Fitness' && '◓'}
-                    {cat === 'Lifestyle' && '◖'}
-                  </span>
-                  <span className="text-sm font-light">{cat}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Spotlight Trends Grid */}
-            <div className="grid lg:grid-cols-3 gap-6">
-              {[
-                { name: "Glass Skin Routine", velocity: 15.2, saturation: 32, signals: 187 },
-                { name: "Blush Contouring", velocity: 12.8, saturation: 28, signals: 134 },
-                { name: "Skinimalism", velocity: 8.4, saturation: 45, signals: 92 }
-              ].map((trend, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + i * 0.1 }}
-                  className="p-6 rounded-2xl bg-secondary/30 border border-border"
-                >
-                  <h3 className="text-base font-light mb-4 text-foreground">
-                    {trend.name}
-                  </h3>
-                  
-                  <div className="space-y-3">
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-muted-foreground">Velocity</span>
-                        <span style={{ color: 'var(--accent-color)' }}>
-                          +{trend.velocity}%
-                        </span>
-                      </div>
-                      <div className="h-1 rounded-full overflow-hidden bg-secondary">
-                        <div 
-                          className="h-full rounded-full"
-                          style={{ 
-                            width: `${trend.velocity * 5}%`,
-                            backgroundColor: 'var(--accent-color)'
-                          }} 
-                        />
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-muted-foreground">Saturation</span>
-                        <span className="text-foreground">{trend.saturation}%</span>
-                      </div>
-                      <div className="h-1 rounded-full overflow-hidden bg-secondary">
-                        <div 
-                          className="h-full rounded-full bg-muted-foreground"
-                          style={{ width: `${trend.saturation}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="pt-2 flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">
-                        {trend.signals} signals
-                      </span>
-                      <button className="text-xs" style={{ color: 'var(--accent-color)' }}>
-                        Analyze →
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Insight Box */}
-            <div 
-              className="mt-8 p-6 rounded-2xl flex items-start gap-4 border"
-              style={{ 
-                backgroundColor: 'rgba(var(--accent-rgb), 0.05)',
-                borderColor: 'rgba(var(--accent-rgb), 0.2)'
-              }}
-            >
-              <span className="text-2xl" style={{ color: 'var(--accent-color)' }}>◎</span>
-              <div>
-                <p className="text-sm mb-1 text-foreground">
-                  <strong className="font-medium">Weekly Insight:</strong> Beauty trends are showing 
-                  exceptional growth patterns with low saturation, indicating strong opportunity for early adoption.
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Consider creating content around glass skin and blush contouring techniques.
-                </p>
-              </div>
-            </div>
-          </div>
+          <CategorySpotlight 
+            categories={userCategories}
+            className=""
+          />
         </div>
       </div>
+
+      {/* Trend Detail Modal */}
+      <AnimatePresence>
+        {selectedTrend && (
+          <TrendDetailModal
+            trend={selectedTrend}
+            onClose={() => setSelectedTrend(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

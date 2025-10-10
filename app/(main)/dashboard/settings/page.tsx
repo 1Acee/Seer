@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useTheme, ACCENT_COLORS, BACKGROUND_THEMES } from '@/contexts/ThemeContext';
 
 const ALL_CATEGORIES = [
@@ -612,6 +613,43 @@ export default function Settings() {
                 <button className="px-6 py-2 rounded-xl border border-border text-secondary-foreground hover:bg-secondary transition-colors">
                   Change password
                 </button>
+              </div>
+            </div>
+          </section>
+
+          {/* Subscription & Billing - MOVED INSIDE space-y-8 wrapper */}
+          <section className="bg-card/80 backdrop-blur-sm rounded-3xl p-8 border border-border/50">
+            <h2 className="text-xl font-light text-foreground mb-6">Subscription & Billing</h2>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 bg-secondary/30 rounded-xl">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Current Plan: Basic</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Limited features • 1 upload per week
+                  </p>
+                </div>
+                <Link
+                  href="/dashboard/subscription"
+                  className="px-6 py-2 rounded-xl text-white text-sm transition-all hover:opacity-90"
+                  style={{ backgroundColor: 'var(--accent-color)' }}
+                >
+                  Manage Plan
+                </Link>
+              </div>
+              
+              <div className="p-4 rounded-xl border" 
+                style={{ 
+                  backgroundColor: 'rgba(var(--accent-rgb), 0.05)',
+                  borderColor: 'rgba(var(--accent-rgb), 0.2)'
+                }}
+              >
+                <p className="text-sm text-foreground mb-1">
+                  🚀 Unlock Pro Features
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Get unlimited uploads, advanced analytics, and priority support
+                </p>
               </div>
             </div>
           </section>

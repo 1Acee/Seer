@@ -155,14 +155,14 @@ export default function TrendCard({ trend, viewMode, onClick }: TrendCardProps) 
   // Grid view
   return (
     <div
-      className="bg-card rounded-3xl p-6 cursor-pointer border border-border hover:border-border transition-all h-full hover:scale-[1.02] hover:-translate-y-2 hover:shadow-xl"
+      className="bg-card rounded-3xl p-6 cursor-pointer border border-border hover:border-border transition-all h-full hover:scale-[1.02] hover:-translate-y-2 hover:shadow-xl overflow-hidden"
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Header */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
+      <div className="flex items-start justify-between mb-4 gap-4">
+        <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xs px-2 py-0.5 bg-secondary text-secondary-foreground rounded-full">
               {trend.category}
@@ -171,11 +171,11 @@ export default function TrendCard({ trend, viewMode, onClick }: TrendCardProps) 
               <span className="text-xs text-muted-foreground">◈</span>
             )}
           </div>
-          <h3 className="text-lg font-light text-foreground mb-1">
+          <h3 className="text-lg font-light text-foreground mb-1 break-words">
             {trend.name}
           </h3>
         </div>
-        <div className="text-right">
+        <div className="text-right flex-shrink-0">
           <div className="text-2xl font-extralight text-foreground">
             {trend.seerScore}
           </div>
@@ -214,39 +214,16 @@ export default function TrendCard({ trend, viewMode, onClick }: TrendCardProps) 
         </div>
       </div>
 
-      {/* Evidence badges */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs text-muted-foreground">Evidence:</span>
-        {Object.entries(trend.evidence)
-          .filter(([_, count]) => count > 0)
-          .sort(([,a], [,b]) => b - a)
-          .slice(0, 3)
-          .map(([platform, count]) => (
-            <span key={platform} className="inline-flex items-center gap-1 px-2 py-0.5 bg-secondary rounded-full text-xs">
-              <span className="opacity-60">
-                {platform === 'reddit' ? '◉' : 
-                 platform === 'tiktok' ? '◈' :
-                 platform === 'youtube' ? '▶' :
-                 platform === 'twitter' ? '◎' : '◐'}
-              </span>
-              <span className="text-muted-foreground">{count}</span>
-            </span>
-          ))}
-        {totalEvidence > 50 && (
-          <span className="text-xs text-muted-foreground">+{totalEvidence - 50}</span>
-        )}
-      </div>
-
       {/* Status pills */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className={`px-2 py-0.5 rounded-full text-xs ${
+      <div className="flex items-center gap-2 mb-4 flex-wrap">
+        <span className={`px-2 py-0.5 rounded-full text-xs whitespace-nowrap ${
           trend.saturation === 'Low' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
           trend.saturation === 'Medium' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400' :
           'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
         }`}>
           {trend.saturation} Saturation
         </span>
-        <span className={`px-2 py-0.5 rounded-full text-xs ${
+        <span className={`px-2 py-0.5 rounded-full text-xs whitespace-nowrap ${
           trend.novelty === 'High' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400' :
           trend.novelty === 'Medium' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' :
           'bg-secondary text-muted-foreground'
